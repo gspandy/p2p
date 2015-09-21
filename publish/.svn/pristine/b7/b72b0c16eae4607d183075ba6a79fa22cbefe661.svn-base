@@ -1,0 +1,7 @@
+<div class="admin-left-menu">
+		<#if mygroup.indexOf('adminholiday')!=-1 ><a href="/adminholiday/holiday_select.html" <#if PageMenu?? && PageMenu='holiday'>class="menu_selected"</#if>>节假日管理</a><a href="/adminholiday/holiday_add.html">+</a><br></#if>
+		<#if mygroup.indexOf('adminholiday')!=-1 ><a href="/adminversion/add.html" <#if PageMenu?? && PageMenu='version'>class="menu_selected"</#if>>版本更新</a><br></#if>
+		<#if mygroup.indexOf('adminholiday')!=-1 ><a href="/adminsmstemplate/select.html" <#if PageMenu?? && PageMenu='smstemplate'>class="menu_selected"</#if>>短信模板</a><br></#if>
+		<#if mygroup.indexOf('adminholiday')!=-1 ><a href="/adminconfig/add.html" <#if PageMenu?? && PageMenu='config'>class="menu_selected"</#if>>系统配置</a><br></#if>
+		<#if mygroup.indexOf('adminholiday')!=-1 ><a href="/admintimer/select.html" <#if PageMenu?? && PageMenu='admintimer'>class="menu_selected"</#if>>定时执行</a><a href="/admintimer/timeradd.html">+</a><br></#if>
+</div>

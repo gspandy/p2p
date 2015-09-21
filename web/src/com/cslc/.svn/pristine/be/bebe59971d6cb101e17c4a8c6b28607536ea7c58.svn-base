@@ -1,0 +1,31 @@
+cslc_selfitem
+id:Long,name:String,status:Byte,category:Byte,unitprice:Double,limitamount:Double,limittype:Byte,totalamount:Double,freezeamount:Double,restamount:Double,annualrate:Double,annualrateextra:Double,days:Integer,activitytitle:String,activitycontent:String,activityurl:String,unitincome:Double,createtime:Date,starttime:Date,finishtime:Date,backtime:Date,incometime:Date,totalincome:Double
+
+<sqlMap resource="com/cslc/dao/selfitem/Selfitem.xml" />
+
+CREATE TABLE `selfitem` (
+  `annualrateextra` decimal(16,2) default NULL,
+  `createtime` datetime default NULL,
+  `incometime` datetime default NULL,
+  `restamount` decimal(16,2) default NULL,
+  `activitytitle` varchar(20) default NULL,
+  `starttime` datetime default NULL,
+  `unitprice` decimal(16,2) default NULL,
+  `backtime` datetime default NULL,
+  `finishtime` datetime default NULL,
+  `limittype` tinyint(2) default NULL,
+  `activityurl` varchar(20) default NULL,
+  `totalamount` decimal(16,2) default NULL,
+  `limitamount` decimal(16,2) default NULL,
+  `name` varchar(20) default NULL,
+  `freezeamount` decimal(16,2) default NULL,
+  `days` int(10) default NULL,
+  `totalincome` decimal(16,2) default NULL,
+  `id` bigint(40) NOT NULL AUTO_INCREMENT,
+  `category` tinyint(2) default NULL,
+  `annualrate` decimal(16,2) default NULL,
+  `unitincome` decimal(16,2) default NULL,
+  `status` tinyint(2) default NULL,
+  `activitycontent` varchar(20) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100000000000000001 DEFAULT CHARSET=utf8;

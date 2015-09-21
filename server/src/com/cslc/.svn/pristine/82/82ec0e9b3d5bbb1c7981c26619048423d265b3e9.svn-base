@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+	<typeAlias alias="Selfitemdetail" type="com.cslc.dao.selfitemdetail.Selfitemdetail" />
+
+	<sql id="Selfitemdetail.RESULT">
+		security,project,selfitemid
+	</sql>
+
+	<sql id="Selfitemdetail.WHERE">
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="security"> security = #security:VARCHAR# </isNotEmpty>
+			<isNotEmpty prepend="and" property="project"> project = #project:VARCHAR# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemid"> selfitemid = #selfitemid:BIGINT# </isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<select id="Selfitemdetail.selectById" parameterClass="java.lang.Long" resultClass="Selfitemdetail">
+		select <include refid="Selfitemdetail.RESULT" /> from selfitemdetail where selfitemid = #selfitemid:BIGINT#
+	</select>
+
+	<insert id="Selfitemdetail.insert" parameterClass="Selfitemdetail">
+		insert into selfitemdetail
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="security"> security </isNotNull>
+			<isNotNull prepend="," property="project"> project </isNotNull>
+			<isNotNull prepend="," property="selfitemid"> selfitemid </isNotNull>
+			)
+		</dynamic>
+		values
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="security"> #security:VARCHAR# </isNotNull>
+			<isNotNull prepend="," property="project"> #project:VARCHAR# </isNotNull>
+			<isNotNull prepend="," property="selfitemid"> #selfitemid:BIGINT# </isNotNull>
+			)
+		</dynamic>
+	</insert>
+
+	<delete id="Selfitemdetail.delete" parameterClass="java.lang.Long">
+		delete from selfitemdetail where id = #id:BIGINT#
+	</delete>
+
+	<update id="Selfitemdetail.update" parameterClass="Selfitemdetail">
+		update selfitemdetail
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="security"> security = #security:VARCHAR# </isNotNull>
+			<isNotNull prepend="," property="project"> project = #project:VARCHAR# </isNotNull>
+			<isNotNull prepend="," property="selfitemid"> selfitemid = #selfitemid:BIGINT# </isNotNull>
+		</dynamic>
+		WHERE id = #id:BIGINT#
+	</update>
+
+	<select id="Selfitemdetail.select" parameterClass="java.util.Map" resultClass="Selfitemdetail">
+		select <include refid="Selfitemdetail.RESULT" /> from selfitemdetail <include refid="Selfitemdetail.WHERE" />
+		<isNotNull prepend="order" property="orderBy"> by $orderBy$ </isNotNull>
+		<isNotNull prepend="limit" property="size"> #first#,#size# </isNotNull>
+	</select>
+
+	<select id="Selfitemdetail.selectCount" parameterClass="java.util.Map" resultClass="java.lang.Long">
+		select count(*) from selfitemdetail <include refid="Selfitemdetail.WHERE" />
+	</select>
+
+	<select id="Selfitemdetail.selectSum" parameterClass="java.util.Map" resultClass="java.lang.Double">
+		select sum($field$) from selfitemdetail <include refid="Selfitemdetail.WHERE" />
+	</select>
+
+</sqlMap>

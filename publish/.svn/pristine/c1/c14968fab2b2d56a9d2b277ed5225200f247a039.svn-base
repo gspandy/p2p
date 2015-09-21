@@ -1,0 +1,6 @@
+<div class="admin-left-menu">
+	<#if modules.indexOf('adminpbs')!=-1 ><a href="/adminpbs/selfitemlist.html" <#if PageMenu?? && PageMenu='selfitem'>class="menu_selected"</#if>>产品</a><a href="/adminpbs/selfitemadd.html">+</a><br></#if>
+	<#if modules.indexOf('adminpbs')!=-1 ><a href="/adminpbs/projectlist.html" <#if PageMenu?? && PageMenu='project'>class="menu_selected"</#if>>项目</a><a href="/adminpbs/projectadd.html">+</a><br></#if>
+	<#if modules.indexOf('adminpbs')!=-1 ><a href="/adminpbs/agreementlist.html" <#if PageMenu?? && PageMenu='agreement'>class="menu_selected"</#if>>协议</a><a href="/adminpbs/agreementadd.html">+</a><br></#if>
+	<#if modules.indexOf('admincslc')!=-1 ><a href="/admincslc/picturelist.html?channel=pbs" <#if PageMenu?? && PageMenu='picture'>class="menu_selected"</#if>>图片</a><a href="/admincslc/pictureadd.html?channel=pbs">+</a><br></#if>
+</div>

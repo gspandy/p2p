@@ -1,0 +1,37 @@
+package com.publish.action;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
+
+import com.cslc.dao.account.AccountDao;
+import com.cslc.dao.accountconfig.AccountconfigDao;
+import com.cslc.service.ProxyService;
+import com.cslc.service.RegistService;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+
+@ParentPackage("web")
+@Namespace("/")
+public class TestAction extends BaseAction {
+
+    @Action("test")
+    public String toLogin() {
+    	WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
+    	ProxyService proxyService = (ProxyService) wac.getBean("transactionProxy");
+    	
+    	try {
+    		String result = proxyService.regist("22222222244", "222222", "test", null, null);
+        	request.setAttribute("result", result);
+		} catch (Exception e) {
+			System.out.println("error");
+		}
+    	
+        return layout(null, null, "测试", "/test.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+
+}

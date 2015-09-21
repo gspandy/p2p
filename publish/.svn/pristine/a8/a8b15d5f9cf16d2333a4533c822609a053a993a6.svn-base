@@ -1,0 +1,12 @@
+<div style="">
+	<form id="search_form" action="/admincrm/search.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+</div>
+
+<div class="admin-left-menu">
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/index.html" <#if PageMenu?? && PageMenu='index'>class="menu_selected"</#if>>用户信息</a><a href="/adminapi/add.html">+</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admindb/db.html" target="_blank">DB Document</a><br><br></#if>
+</div>

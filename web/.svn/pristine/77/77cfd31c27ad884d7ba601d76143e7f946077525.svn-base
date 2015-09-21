@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="../style/style.css">
+<section>
+<input type="hidden" id="login" name="login" value="${login!}"  >
+<input type="hidden" id="code" name="code" value="${code!}"  >
+    <h2 class="point-h2">${scoreasset!}<span>元</span></h2>
+    <div class="point-chaining2">
+        <div class="point-a award"><img class="record-img" src="images/box.png" /><p>兑换奖品</p></div>
+        <div class="point-a1"><img class="record-img" src="images/man.png" /><p>我的任务</p></div>
+        <div class="point-a record"><img class="record-img" src="images/calendar.png" /><p>积分记录</p></div>
+    </div>
+    
+</section>
+
+<script type="text/javascript">
+    var code = $("#code").val();
+    var login = $("#login").val();
+      $(".award").on("click", function() {
+			window.location.href = "scoreaward.html?code="+code+"&login="+login+"&newopen";
+		});
+		$(".point-a1").on("click", function() {
+			window.location.href = "scoretask.html?code="+code+"&login="+login+"&newopen";
+		});
+		$(".record").on("click", function() {
+			window.location.href = "scorerecord.html?code="+code+"&login="+login+"&newopen";
+		});
+		
+</script>

@@ -1,0 +1,5 @@
+<div class="admin-left-menu">
+	<a href="/adminqa/select.html" <#if PageMenu?? && PageMenu='qa'>class="menu_selected"</#if>>问答系统</a><a href="/adminqa/add.html">+</a><br>
+	<a href="/adminqa/knowledge.html" <#if PageMenu?? && PageMenu='knowledge'>class="menu_selected"</#if>>客服知识库</a><br>
+	
+</div>

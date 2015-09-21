@@ -1,0 +1,10 @@
+cslc_selfitemdetail
+selfitemid:Long,project:String,security:String
+
+<sqlMap resource="com/cslc/dao/selfitemdetail/Selfitemdetail.xml" />
+
+CREATE TABLE `selfitemdetail` (
+  `security` varchar(20) default NULL,
+  `project` varchar(20) default NULL,
+  `selfitemid` bigint(40) default NULL
+) ENGINE=InnoDB AUTO_INCREMENT=100000000000000001 DEFAULT CHARSET=utf8;

@@ -1,0 +1,44 @@
+package com.cslc.dao.selfitemdetail;
+
+import java.util.List;
+import java.util.Map;
+import com.platform.base.MysqlBaseDao;
+import org.springframework.stereotype.Service;
+
+@Service("selfitemdetailDao")
+public class SelfitemdetailDao extends MysqlBaseDao {
+
+	public Selfitemdetail selectById(Long id) {
+		Object meta = queryForObject("Selfitemdetail.selectById", id);
+		if(meta != null){
+			return (Selfitemdetail) meta;
+		}
+		return null;
+	}
+
+	public Long insert(Selfitemdetail meta) {
+		return insert("Selfitemdetail.insert", meta);
+	}
+
+	public boolean delete(Long id) {
+		return delete("Selfitemdetail.delete", id);
+	}
+
+	public boolean update(Selfitemdetail meta) {
+		return update("Selfitemdetail.update", meta);
+	}
+
+	public List<Selfitemdetail> select(Map<String, Object> map) {
+		return (List<Selfitemdetail>) queryForList("Selfitemdetail.select", map);
+	}
+
+	public long selectCount(Map<String, Object> map) {
+		return (Long) queryForObject("Selfitemdetail.selectCount", map);
+	}
+
+	public double selectSum(Map<String, Object> map) {
+		return (Double) queryForObject("Selfitemdetail.selectSum", map);
+	}
+
+}
+

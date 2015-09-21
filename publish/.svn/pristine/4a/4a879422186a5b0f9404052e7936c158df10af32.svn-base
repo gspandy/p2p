@@ -1,0 +1,38 @@
+<#include "/crm/menu.ftl" />
+
+<table class="tables">
+	
+	<tr class="th">
+		<td>银行卡</td>
+		<td>支付渠道</td>
+		<td>回款金额</td>
+		<td>返现红包</td>
+		<td>费率</td>
+		<td>创建时间</td>
+		<td>提交第三方时间</td>
+	</tr>
+	<#if cashback??>
+		<tr class="th">
+			<td>${cashback.bankcardid!}</td>
+			<td>${cashback.paychannel!} </td>
+			<td>${cashback.amount!}</td>
+			<td>${cashback.bonus!}</td>
+			<td>${cashback.fee!}</td>
+			<td><#if cashback.createtime??>${cashback.createtime?string('yyyy-MM-dd')}</#if></td>
+			<td><#if cashback.submittime??>${cashback.submittime?string('yyyy-MM-dd')}</#if></td>
+		</tr>
+	</#if>
+	
+	<#if list?exists>
+	<#list list as p>
+	<tr>
+		<td align="left">阿桑地方</td>
+		<td align="left">123</td>
+		<td width="80">阿桑地方</td>
+		<td width="80">
+			<a href="/adminapi/add.html">编辑</a>
+		</td>
+	</tr>
+	</#list>
+	</#if>
+</table>

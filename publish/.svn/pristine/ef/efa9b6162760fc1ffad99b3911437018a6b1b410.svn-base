@@ -1,0 +1,435 @@
+/* -----------------------框架----------------------- */
+.header {
+	text-align: center;
+	min-width: 1020px;
+}
+
+.header .top {
+	width: 1010px;
+	margin: auto;
+	height: 120px;
+	min-width: 1010px;
+	text-align: left;
+}
+
+.header .logo {
+	float: left;
+	width: 140px;
+	height: 100px;
+	margin: 10px 0 0 -10px;
+	background: url('../style/image/logo.gif') no-repeat;
+}
+
+.header .code {
+	float: right;
+	width: 70px;
+	text-align: right;
+	margin: 14px -5px 0 0;
+}
+
+.header .middle {
+	float: left;
+	width: 780px;
+	margin-top: 10px;
+	text-align: right;
+}
+
+.header .login {
+	float: right;
+	font: 15px microsoft yahei;
+	line-height: 40px;
+}
+
+.header .login a {
+	color: #EE1D23;
+}
+
+/* -----------------------菜单----------------------- */
+.nav {
+	display: inline-block;
+	height: 30px;
+	line-height: 30px;
+	background: #eee;
+	float: right;
+}
+
+.nav a {
+	text-decoration: none;
+	color: #333;
+	font-size: 14px;
+}
+
+.nav ul {
+	list-style: none;
+}
+
+.nav .menu {
+	float: left;
+	position: relative;
+}
+
+.nav .menu a {
+	display: inline-block;
+	padding: 0 10px;
+}
+
+.nav .menu a:hover {
+	background: #EE1D23;
+	color: white;
+}
+
+.nav .menu ul {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 30px;
+	width: 90px;
+	background: #eee;
+	text-align: left;
+}
+
+.nav .menu ul a {
+	display: block;
+}
+
+.nav .menu .selected {
+	color: #EE1D23;
+}
+
+.center {
+	text-align: center;
+}
+
+.center .content {
+	text-align: left;
+	margin: 0 auto;
+	width: 1010px;
+}
+
+.footer {
+	clear: both;
+	font: 13px "宋体";
+	color: #999999;
+	text-align: center;
+	overflow: hidden;
+	line-height: 20px;
+	margin: 0 auto;
+	width: 1010px;
+}
+
+.footer .bar {
+	height: 10px;
+	overflow: hidden;
+}
+
+.footer .img {
+	width: 138px;
+	height: 53px;
+}
+
+/* -----------------------部件----------------------- */
+
+/* 全局 */
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	font: 13px microsoft yahei;
+	color: #333333;
+}
+
+img {
+	border: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #6D6D6D;
+}
+
+a:hover {
+	color: #EE1D23;
+}
+
+textarea {
+	width: 400px;
+	height: 100px;
+}
+
+.clear {
+	clear: both;
+}
+
+/* 提交按钮 */
+.submit_div {
+	width: 832px;
+}
+
+.submit {
+	cursor: pointer;
+	margin: 3px 0 0 0;
+	padding: 4px 18px 4px 18px;
+	padding-top: 8px\9;
+	text-decoration: none;
+	color: white;
+	border: 1px solid #E8000C;
+	background: #E8000C;
+}
+
+/* 排序方式 */
+.orderField {
+	border: 1px solid #DBDBDB;
+	height: 25px;
+	padding: 7px 0 0 7px;
+	background: #FBFBFB;
+}
+
+.orderField a {
+	color: #6D6D6D;
+	padding: 3px;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.orderField .selected {
+	color: white;
+	background: #6D6D6D;
+}
+
+/* 左右文字 */
+.left-label {
+	color: #999999;
+}
+
+.right-label {
+	font-weight: bold;
+	color: #6D6D6D;
+}
+
+/* 导航文字 */
+.navigator {
+	color: #FF8319;
+	font-weight: bold;
+	font-size: 14px;
+	margin: 10px 0 10px 0;
+	background: #EEEEEE;
+	padding: 5px 5px 4px 5px;
+	border: 1px solid #DBDBDB;
+}
+
+/* -----------------------模块----------------------- */
+.tables {
+	margin-bottom: 7px;
+	border-collapse: collapse;
+	width: 832px;
+	text-align: center;
+}
+
+.tables .th {
+	
+}
+
+.tables tr {
+	height: 27px;
+}
+
+.tables td {
+	border: 1px solid #ccc;
+	padding: 3px;
+}
+
+.tables a {
+	text-decoration: none;
+}
+
+.tables .right-text {
+	background: #F2F2F2;
+	width: 200px;
+	padding: 3px;
+	height: 20px;
+}
+
+/* 翻页 */
+.pages {
+	float: left;
+	margin: 12px auto;
+	color: #6D6D6D;
+	text-align: center;
+	width: 100%;
+}
+
+.pages a {
+	padding: 2px 5px 2px 5px;
+	color: #6D6D6D;
+	margin-right: 5px;
+	text-decoration: none;
+}
+
+.pages a:hover {
+	color: white;
+	background: #6D6D6D;
+}
+
+.pages span.current {
+	padding: 2px 5px 2px 5px;
+	font-weight: bold;
+	color: white;
+	background: #E8000C;
+}
+
+/* 弹出框 */
+.dialog {
+	display: none;
+	background: white;
+	border: 1px solid #6D6D6D;
+	color: #6D6D6D;
+	padding: 10px;
+	z-index: 9999;
+}
+
+.dialog .top {
+	border-bottom: 2px solid #6D6D6D;
+	height: 24px;
+}
+
+.dialog .top .label {
+	float: left;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+
+.dialog .top .close {
+	float: left;
+	background: url(../style/image/close.png) no-repeat;
+	width: 24px;
+	height: 24px;
+	margin-top: 2px;
+}
+
+.dialog .content {
+	clear: both;
+	padding: 5px 0 5px 0;
+}
+
+.dialog .content .input {
+	padding: 3px;
+	width: 200px;
+	margin: 10px 0 5px 0;
+}
+
+.dialog .content .buttons {
+	float: left;
+}
+
+.dialog .content .error {
+	float: left;
+	color: #E1060C;
+	text-align: center;
+	padding: 8px 3px 0 3px;
+	width: 200px;
+}
+
+.dialog .content a {
+	color: #6D6D6D;
+}
+
+/* animation image */
+.window {
+	height: 440px;
+	overflow: hidden;
+	position: relative;
+}
+
+.window .image_reel {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.window .image_reel img {
+	float: left;
+}
+
+.window .paging {
+	position: absolute;
+	right: -50px;
+	bottom: 0;
+	width: 215px;
+	height: 47px;
+	text-align: center;
+	line-height: 40px;
+	display: none;
+}
+
+.window .paging a {
+	padding: 5px;
+	text-decoration: none;
+	color: #EE1D23;
+}
+
+.window .paging a.active {
+	font-weight: bold;
+	background: #EE1D23;
+	color: white;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+.window .paging a:hover {
+	font-weight: bold;
+}
+
+.admin-left-menu {
+	float: left;
+	border: 1px solid #DBDBDB;
+	padding: 10px;
+	line-height: 40px;
+	width: 149px;
+	margin: 0 7px 7px 0;
+}
+
+.admin-left-menu a {
+	margin-left: 10px;
+	text-decoration: none;
+	color: #6D6D6D;
+}
+
+.admin-left-menu .menu_selected {
+	color: #E8000C;
+}
+
+.admin-right-content {
+	float: right;
+	border: 1px solid #DBDBDB;
+	width: 810px;
+	padding: 10px;
+	margin-bottom: 5px;
+}
+
+.admin-right-content1 {
+	float: left;
+	border: 1px solid #DBDBDB;
+	width: 785px;
+	padding: 10px;
+	margin-bottom: 5px;
+}
+
+.web-right-content {
+	float: left;
+	border: 1px solid #DBDBDB;
+	width: 738px;
+	padding: 10px;
+	margin-bottom: 5px;
+}
+
+.line {
+	min-width: 1010px;
+	height: 32px;
+}

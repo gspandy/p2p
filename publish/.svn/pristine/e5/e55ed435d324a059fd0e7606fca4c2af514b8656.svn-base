@@ -1,0 +1,88 @@
+/*	
+	从数组中获取序号
+*/
+function getIndexFromArr(arr,val){
+	for(var i = 0; i < arr.length; i ++){
+		if(arr[i] == val){
+			return i;
+		}
+	}
+}
+
+/*	
+	提交表单
+*/
+function submitForm(formId,beforeSubmitFunction){
+	if(_checkfield(formId)){
+		if(beforeSubmitFunction == null || eval(beforeSubmitFunction)){
+			$('#' + formId).submit();
+		}
+	}
+}
+
+function confirmBeforeDelete(url){
+	if(confirm('你确定要删除该记录吗?')){
+		window.location = url;
+	}
+}
+
+/*	
+	提示窗口,info可以是html标签
+*/
+function errorTip(info){
+	$('#errorMsg').html(info);
+	$('#errorTip').show();
+}
+function closeErrorTip(){
+	$('#errorTip').hide();
+}
+
+/*
+	获取当前日期
+*/
+function getCurrentDate(type){
+	var d = new Date();
+	var year = d.getFullYear();
+	var month = d.getMonth();
+	month++;
+	if(month==12){
+		month = 1;
+	}
+	if(month<10){
+		month = '0'+month;
+	}
+	var date = d.getDate();
+	var hours = d.getHours();
+	var minutes = d.getMinutes();
+	if(minutes<10){
+		minutes = '0'+minutes;
+	}
+	var seconds = d.getSeconds();
+	if(seconds<10){
+		seconds = '0'+seconds;
+	}
+	var day = d.getDay();
+	var dayCn = '';
+	switch(day){
+		case 1:dayCn = '一';break;
+		case 2:dayCn = '二';break;
+		case 3:dayCn = '三';break;
+		case 4:dayCn = '四';break;
+		case 5:dayCn = '五';break;
+		case 6:dayCn = '六';break;
+		case 7:dayCn = '日';break;
+		default:break;
+	}
+	
+	if(type == 1){
+		return year + '-' + month + '-' + date + ' 星期' + dayCn;
+	}
+	
+	if(type == 2){
+		return year + '-' + month + '-' + date;
+	}
+	
+	if(type == 3){
+		return year + '-' + month + '-' + date + ' ' + hours + ':' + minutes + ':' + seconds;
+	}
+}

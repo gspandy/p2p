@@ -1,0 +1,64 @@
+package com.h5.action;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.cslc.dao.message.Message;
+import com.cslc.dao.message.MessageDao;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+import com.platform.util.PageUtil;
+import com.platform.util.StringUtil;
+
+@ParentPackage("web")
+@Namespace("/")
+public class MessageAction extends BaseAction{
+	
+	
+	 @Resource
+	    private MessageDao messageDao;
+	
+	
+	   // 消息列表
+    @Action("messagelist")
+    public String messagelist() {
+        String perCount = getParameter("perCount");
+        String pageNo = getParameter("pageNo");
+        long accountid = Long.parseLong(getParameter("accountid"));
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("accountid", accountid);
+        m.put("orderBy", "status asc,createtime desc");
+        PageUtil.getMap(m, pageNo, messageDao.selectCount(m), perCount);
+        List<Message> list = messageDao.select(m);
+        List<Map<String, Object>> mlist = new ArrayList<Map<String, Object>>();
+        for (Message msg : list) {
+        	if(msg.getStatus()==Message.STATUS_NOT_READ){
+        		msg.setStatus(Message.STATUS_READ);
+        		messageDao.update(msg);
+        	}
+        	
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("messageid", msg.getId());
+            map.put("content", msg.getContent());
+            map.put("title", msg.getTitle());
+            map.put("createtime", StringUtil.convertDateToString(msg.getCreatetime()));
+            mlist.add(map);
+        }
+        request.setAttribute("records", mlist);
+
+  
+        return layout(null, null, "消息列表", "/h5/message.ftl", SystemConstant.LAYOUT_H5);
+    }
+
+
+}

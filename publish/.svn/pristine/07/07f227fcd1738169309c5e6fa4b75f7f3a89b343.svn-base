@@ -1,0 +1,42 @@
+<#include "/crm/menu.ftl" />
+
+<table class="tables">
+	
+	<tr class="th">
+		<td>类型</td>
+		<td>手机号</td>
+		<td>创建时间</td>
+		<td>发送时间</td>
+		<td>验证时间</td>
+		<td>状态</td>
+		<td>渠道</td>
+		<td>内容</td>
+	</tr>
+	<#if smsList??>
+		<#list smsList as sms>
+			<tr class="th">
+				<td>${sms.category!}</td>
+				<td>${sms.mobile!} </td>
+				<td><#if sms.createtime??>${sms.createtime?string('yyyy-MM-dd')}</#if></td>
+				<td><#if sms.sendtime??>${sms.sendtime?string('yyyy-MM-dd')}</#if></td>
+				<td><#if sms.verifytime??>${sms.verifytime?string('yyyy-MM-dd')}</#if></td>
+				<td>${sms.status!}</td>
+				<td>${sms.channel!}</td>
+				<td>${sms.content!}</td>
+			</tr>
+		</#list>
+	</#if>
+	
+	<#if list?exists>
+	<#list list as p>
+	<tr>
+		<td align="left">阿桑地方</td>
+		<td align="left">123</td>
+		<td width="80">阿桑地方</td>
+		<td width="80">
+			<a href="/adminapi/add.html">编辑</a>
+		</td>
+	</tr>
+	</#list>
+	</#if>
+</table>

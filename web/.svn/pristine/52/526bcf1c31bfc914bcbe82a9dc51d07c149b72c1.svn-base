@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="../style/style.css">
+<section>
+<input type="hidden" id="login" name="login" value="${login!}"  >
+<input type="hidden" id="code" name="code" value="${code!}"  >
+    <h2 class="integral-h2">${scoreasset!}</h2>
+    <div class="integral-chaining2">
+        <div class="integral-1-2"><img class="record-img" src="images/box.png" /><p>兑换奖品</p></div>
+        <div class="integral-2-2"><img class="record-img" src="images/yman.png" /><p>我的任务</p></div>
+        <div class="integral-3"><img class="record-img" src="images/calendar.png" /><p>积分记录</p></div>
+    </div>
+<#if records??>
+   <#list records as l>       
+    <div class="task-main">
+        <h3 class="task-h3">${l.title!}</h3>
+        <h4 class="task-h4">+${l.score!}积分</h4>
+    </div>
+  </#list>
+</#if>
+</section>
+
+<script type="text/javascript">
+    var code = $("#code").val();
+    var login = $("#login").val();
+      $(".integral-1-2").on("click", function() {
+			window.location.href = "scoreaward.html?code="+code+"&login="+login+"&newopen";
+		});
+		$(".integral-3").on("click", function() {
+			window.location.href = "scorerecord.html?code="+code+"&login="+login+"&newopen";
+		});
+		
+</script>

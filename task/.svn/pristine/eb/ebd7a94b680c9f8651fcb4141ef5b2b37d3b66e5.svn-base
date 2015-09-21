@@ -1,0 +1,56 @@
+log4j.rootLogger=error,stdout,logfile
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%-5p[%c.%M()][%L]: %m%n
+ 
+log4j.appender.logfile=org.apache.log4j.RollingFileAppender
+log4j.appender.logfile.File=/cslc_log/cslc_server/cslc_server.log
+log4j.appender.logfile.encoding=GB18030
+log4j.appender.logfile.MaxFileSize=10240KB
+log4j.appender.logfile.MaxBackupIndex=30
+log4j.appender.logfile.layout=org.apache.log4j.PatternLayout
+log4j.appender.logfile.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %c.%M()%n%p: <%m>%n
+
+log4j.logger.org.directwebremoting=error
+log4j.logger.org.springframework=error
+
+log4j.logger.paysuccessLog=info,paysuccess
+log4j.appender.paysuccess=org.apache.log4j.FileAppender
+log4j.appender.paysuccess.File=/cslc_log/cslc_server/paysuccess.log
+log4j.appender.paysuccess.encoding=GB18030
+log4j.appender.paysuccess.layout=org.apache.log4j.PatternLayout
+log4j.appender.paysuccess.layout.ConversionPattern=%d %m%n
+log4j.additivity.paysuccess=false
+
+log4j.logger.urlsLog=info,urls
+log4j.appender.urls=org.apache.log4j.FileAppender
+log4j.appender.urls.File=/cslc_log/cslc_server/urls.log
+log4j.appender.urls.encoding=GB18030
+log4j.appender.urls.layout=org.apache.log4j.PatternLayout
+log4j.appender.urls.layout.ConversionPattern=%d %m%n
+log4j.additivity.urls=false
+
+log4j.logger.concurrentLog=info,concurrent
+log4j.appender.concurrent=org.apache.log4j.FileAppender
+log4j.appender.concurrent.File=/cslc_log/cslc_server/concurrent.log
+log4j.appender.concurrent.encoding=GB18030
+log4j.appender.concurrent.layout=org.apache.log4j.PatternLayout
+log4j.appender.concurrent.layout.ConversionPattern=%d %m%n
+log4j.additivity.concurrent=false
+
+log4j.logger.taskLog=info,task
+log4j.appender.task=org.apache.log4j.FileAppender
+log4j.appender.task.File=/cslc_log/cslc_server/task.log
+log4j.appender.task.encoding=GB18030
+log4j.appender.task.layout=org.apache.log4j.PatternLayout
+log4j.appender.task.layout.ConversionPattern=%d %m%n
+log4j.additivity.task=false
+
+#print sql
+#log4j.logger.com.ibatis=debug
+#log4j.logger.com.ibatis.common.jdbc.SimpleDataSource=debug
+#log4j.logger.com.ibatis.common.jdbc.ScriptRunner=debug
+#log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate=debug
+#log4j.logger.java.sql.Connection=debug
+#log4j.logger.java.sql.Statement=debug
+#log4j.logger.java.sql.PreparedStatement=debug,stdout

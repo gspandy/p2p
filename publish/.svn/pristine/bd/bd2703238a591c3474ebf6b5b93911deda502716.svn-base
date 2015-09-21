@@ -1,0 +1,315 @@
+package com.publish.action;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.cslc.dao.account.Account;
+import com.cslc.dao.account.AccountDao;
+import com.cslc.dao.accountasset.Accountasset;
+import com.cslc.dao.accountasset.AccountassetDao;
+import com.cslc.dao.accountselfitem.Accountselfitem;
+import com.cslc.dao.accountselfitem.AccountselfitemDao;
+import com.cslc.dao.bonus.Bonus;
+import com.cslc.dao.bonus.BonusDao;
+import com.cslc.dao.cashback.Cashback;
+import com.cslc.dao.cashback.CashbackDao;
+import com.cslc.dao.feedback.Feedback;
+import com.cslc.dao.feedback.FeedbackDao;
+import com.cslc.dao.message.Message;
+import com.cslc.dao.message.MessageDao;
+import com.cslc.dao.score.Score;
+import com.cslc.dao.score.ScoreDao;
+import com.cslc.dao.sms.Sms;
+import com.cslc.dao.sms.SmsDao;
+import com.cslc.dao.task.Task;
+import com.cslc.dao.task.TaskDao;
+import com.cslc.dao.tasklog.TasklogDao;
+import com.cslc.dao.trade.Trade;
+import com.cslc.dao.trade.TradeDao;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+import com.platform.util.PageUtil;
+
+@ParentPackage("web")
+@Namespace("/admincrm")
+public class CrmAction extends BaseAction {
+
+	@Resource
+	private AccountDao accountDao;
+
+	@Resource
+	private AccountassetDao accountassetDao;
+
+	@Resource
+	private AccountselfitemDao accountselfitemDao;
+	
+	@Resource
+	private TradeDao tradeDao;
+	
+	@Resource
+	private CashbackDao cashbackDao;
+	
+	@Resource
+	private BonusDao bonusDao;
+	
+	@Resource
+	private ScoreDao scoreDao;
+	
+	@Resource
+	private TaskDao taskDao;
+	
+	@Resource
+	private TasklogDao tasklogDao;
+	
+	@Resource
+	private FeedbackDao feedbackDao;
+	
+	@Resource
+	private MessageDao messageDao;
+	
+	@Resource
+	private SmsDao smsDao;
+    @Action("index")
+    public String index() {
+        return layout("crm", "accountdetail", "测试", "/crm/index.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    
+    
+    
+    /**
+     * 客户详细信息查询
+     * @return
+     */
+    @Action("accountdetail")
+    public String accountdetail() {
+    	/**
+    	 * 手机号码只对应一个客户
+    	 **/
+    	String mobile = getParameter("mobile");
+    	Map<String, Object> mapParam = new HashMap<String, Object>();
+    	if(mobile != null){
+    		mapParam.put("mobile",mobile);
+    		List<Account> accounts = accountDao.select(mapParam);
+    		if(!accounts.isEmpty()){
+    			Account account = accounts.get(0);
+    			Accountasset accountasset = accountassetDao.selectById(accounts.get(0).getId());
+    			account.setAccountasset(accountasset);
+    			request.setAttribute("account", account);
+    		}
+    	}
+    	
+        return layout("crm", "accountdetail", "客户查询", "/crm/accountdetail.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    /**
+     * 客户投资产品查询
+     * @return
+     */
+    @Action("accountselfitemlist")
+    public String accountselfitemlist() {
+    	String mobile = getParameter("mobile");
+    	if(mobile != null){
+	    	Map<String, Object> mapParam = new HashMap<String, Object>();
+	    	mapParam.put("mobile",mobile);
+	    	
+	    	List<Account> accounts = accountDao.select(mapParam);
+	    	if(!accounts.isEmpty()){
+	    		Account account = accounts.get(0);
+	    		mapParam.clear();
+	    		mapParam.put("accountid", account.getId());
+	    	}
+	    	
+	    	List<Accountselfitem> accountselfitems = accountselfitemDao.select(mapParam);
+	    	request.setAttribute("accountselfitems",accountselfitems );
+	    	//PageUtil.getMap(mapParam, getParameter("pageNo"), accountselfitemDao.selectCount(mapParam), "20");
+	    	
+    	}
+        return layout("crm", "accountselfitemlist", "投资列表", "/crm/accountselfitemlist.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    
+    /**
+     * 客户交易查询
+     * @return
+     */
+    @Action("tradeSearch")
+    public String tradeSearch() {
+    	String mobile = getParameter("mobile");
+    	if(mobile != null){
+	    	Map<String, Object> mapParam = new HashMap<String, Object>();
+	    	mapParam.put("mobile",mobile);
+	    	List<Trade> trades = tradeDao.select(mapParam);
+	    	if(!trades.isEmpty()){
+	    		request.setAttribute("trades",trades );
+	    	}
+	    	//PageUtil.getMap(mapParam, getParameter("pageNo"), accountselfitemDao.selectCount(mapParam), "20");
+	    	
+    	}
+        return layout("crm", "tradeSearch", "交易查询", "/crm/tradeSearch.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    
+    /**
+     * 回款查询
+     * @return
+     */
+    @Action("cashbackSearch")
+    public String cashbackSearch() {
+    	String mobile = getParameter("mobile");
+    	if(mobile != null){
+	    	Map<String, Object> mapParam = new HashMap<String, Object>();
+	    	mapParam.put("mobile",mobile);
+	    	List<Account> accounts = accountDao.select(mapParam);
+	    	if(!accounts.isEmpty()){
+	    		Cashback  cashback = cashbackDao.selectById(accounts.get(0).getId());
+	    		request.setAttribute("cashback",cashback );
+	    	}
+	    	//PageUtil.getMap(mapParam, getParameter("pageNo"), accountselfitemDao.selectCount(mapParam), "20");
+	    	
+    	}
+        return layout("crm", "cashbackSearch", "回款查询", "/crm/cashbackSearch.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    
+    /**
+     * 红包查询
+     * @return
+     */
+    @Action("bonusSearch")
+    public String bonusSearch() {
+    	String mobile = getParameter("mobile");
+    	if(mobile != null){
+    		Map<String, Object> mapParam = new HashMap<String, Object>();
+    		mapParam.put("mobile",mobile);
+    		List<Account> accounts = accountDao.select(mapParam);
+    		if(!accounts.isEmpty()){
+    			Bonus bonus = bonusDao.selectById(accounts.get(0).getId());
+    			request.setAttribute("bonus",bonus);
+    		}
+    		//PageUtil.getMap(mapParam, getParameter("pageNo"), accountselfitemDao.selectCount(mapParam), "20");
+    		
+    	}
+    	return layout("crm", "bonusSearch", "红包查询", "/crm/bonusSearch.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    /**
+     * 积分查询
+     * @return
+     */
+    @Action("scoreSearch")
+    public String scoreSearch() {
+    	String mobile = getParameter("mobile");
+    	if(mobile != null){
+    		Map<String, Object> mapParam = new HashMap<String, Object>();
+    		mapParam.put("mobile",mobile);
+    		List<Account> accounts = accountDao.select(mapParam);
+    		if(!accounts.isEmpty()){
+    			Score score = scoreDao.selectById(accounts.get(0).getId());
+    			request.setAttribute("score",score);
+    		}
+    		//PageUtil.getMap(mapParam, getParameter("pageNo"), accountselfitemDao.selectCount(mapParam), "20");
+    		
+    	}
+    	return layout("crm", "scoreSearch", "积分查询", "/crm/scoreSearch.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    
+    /**
+     * 任务查询
+     * @return
+     */
+    @Action("taskSearch")
+    public String taskSearch() {
+    	String mobile = getParameter("mobile");
+    	if(mobile != null){
+    		Map<String, Object> mapParam = new HashMap<String, Object>();
+    		mapParam.put("mobile",mobile);
+    		List<Account> accounts = accountDao.select(mapParam);
+    		if(!accounts.isEmpty()){
+    			Task task = taskDao.selectById(tasklogDao.selectById(accounts.get(0).getId()).getTaskid()); 
+    			request.setAttribute("task",task);
+    		}
+    		//PageUtil.getMap(mapParam, getParameter("pageNo"), accountselfitemDao.selectCount(mapParam), "20");
+    		
+    	}
+    	return layout("crm", "taskSearch", "任务查询", "/crm/taskSearch.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    /**
+     * 客户反馈查询
+     * @return
+     */
+    @Action("feedbackSearch")
+    public String feedbackSearch() {
+    	String mobile = getParameter("mobile");
+    	if(mobile != null){
+    		Map<String, Object> mapParam = new HashMap<String, Object>();
+    		mapParam.put("mobile",mobile);
+    		List<Feedback> feedbacks = feedbackDao.select(mapParam);
+    		if(!feedbacks.isEmpty()){
+    			request.setAttribute("feedbacks",feedbacks);
+    		}
+    		//PageUtil.getMap(mapParam, getParameter("pageNo"), accountselfitemDao.selectCount(mapParam), "20");
+    		
+    	}
+    	return layout("crm", "feedbackSearch", "反馈查询", "/crm/feedbackSearch.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    
+    
+    /**
+     * 消息查询
+     * @return
+     */
+    @Action("messageSearch")
+    public String messageSearch() {
+    	String mobile = getParameter("mobile");
+    	if(mobile != null){
+    		Map<String, Object> mapParam = new HashMap<String, Object>();
+    		mapParam.put("mobile",mobile);
+    		List<Account> accounts = accountDao.select(mapParam);
+    		if(!accounts.isEmpty()){
+    			Message message = messageDao.selectById(accounts.get(0).getId());
+    			request.setAttribute("message",message);
+    		}
+    		//PageUtil.getMap(mapParam, getParameter("pageNo"), accountselfitemDao.selectCount(mapParam), "20");
+    		
+    	}
+    	return layout("crm", "messageSearch", "消息查询", "/crm/messageSearch.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    /**
+     * 短信查询
+     * @return
+     */
+    @Action("smsSearch")
+    public String smsSearch() {
+    	String mobile = getParameter("mobile");
+    	if(mobile != null){
+    		Map<String, Object> mapParam = new HashMap<String, Object>();
+    		mapParam.put("mobile",mobile);
+    		List<Sms> smsList = smsDao.select(mapParam);
+    		if(!smsList.isEmpty()){
+    			request.setAttribute("smsList",smsList);
+    		}
+    		//PageUtil.getMap(mapParam, getParameter("pageNo"), accountselfitemDao.selectCount(mapParam), "20");
+    		
+    	}
+    	return layout("crm", "smsSearch", "短信查询", "/crm/smsSearch.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    
+    
+  /*  @Action("search")
+    public String search() {
+    	String mobile = getParameter("mobile");
+    	//String url = getParameter("url");
+    	Map<String, Object> mapParam = new HashMap<String, Object>();
+    	mapParam.put("mobile",mobile);
+    	List<Object> list = service.searchcrm(mapParam);
+    	List<String> names = (List<String>) list.get(0);
+    	List<Account> accounts = (List<Account>) list.get(1);
+    	request.setAttribute("accounts", accounts);
+    	request.setAttribute("names", names);
+//        return layout("crm", "index", "测试", "/crm/search.ftl", SystemConstant.LAYOUT_ADMIN);
+        return layout("crm", "index", "客户查询", "/crm/search.ftl", SystemConstant.LAYOUT_ADMIN);
+    }*/
+
+}

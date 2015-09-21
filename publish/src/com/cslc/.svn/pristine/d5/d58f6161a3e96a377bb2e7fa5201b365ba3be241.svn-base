@@ -1,0 +1,108 @@
+package com.cslc.dao.cashback;
+
+import java.util.Date;
+import com.platform.base.BaseEntity;
+
+public class Cashback extends BaseEntity {
+
+	private Long accountid;
+	private Date submittime;
+	private Byte paychannel;
+	private Double amount;
+	private Date createtime;
+	private Long bankcardid;
+	private Double bonus;
+	private Double fee;
+	private Long id;
+	private Long selfitemid;
+	private Byte status;
+
+	public Long getAccountid(){
+		return accountid;
+	}
+
+	public void setAccountid(Long accountid) {
+		this.accountid = accountid;
+	}
+
+	public Date getSubmittime(){
+		return submittime;
+	}
+
+	public void setSubmittime(Date submittime) {
+		this.submittime = submittime;
+	}
+
+	public Byte getPaychannel(){
+		return paychannel;
+	}
+
+	public void setPaychannel(Byte paychannel) {
+		this.paychannel = paychannel;
+	}
+
+	public Double getAmount(){
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	public Date getCreatetime(){
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
+	public Long getBankcardid(){
+		return bankcardid;
+	}
+
+	public void setBankcardid(Long bankcardid) {
+		this.bankcardid = bankcardid;
+	}
+
+	public Double getBonus(){
+		return bonus;
+	}
+
+	public void setBonus(Double bonus) {
+		this.bonus = bonus;
+	}
+
+	public Double getFee(){
+		return fee;
+	}
+
+	public void setFee(Double fee) {
+		this.fee = fee;
+	}
+
+	public Long getId(){
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getSelfitemid(){
+		return selfitemid;
+	}
+
+	public void setSelfitemid(Long selfitemid) {
+		this.selfitemid = selfitemid;
+	}
+
+	public Byte getStatus(){
+		return status;
+	}
+
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
+
+}

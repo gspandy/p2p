@@ -1,0 +1,36 @@
+package com.cslc.dao.selfitemdetail;
+
+import java.util.Date;
+import com.platform.base.BaseEntity;
+
+public class Selfitemdetail extends BaseEntity {
+
+	private String security;
+	private String project;
+	private Long selfitemid;
+
+	public String getSecurity(){
+		return security;
+	}
+
+	public void setSecurity(String security) {
+		this.security = security;
+	}
+
+	public String getProject(){
+		return project;
+	}
+
+	public void setProject(String project) {
+		this.project = project;
+	}
+
+	public Long getSelfitemid(){
+		return selfitemid;
+	}
+
+	public void setSelfitemid(Long selfitemid) {
+		this.selfitemid = selfitemid;
+	}
+
+}

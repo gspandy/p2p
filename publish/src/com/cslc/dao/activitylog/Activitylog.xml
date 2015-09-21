@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+	<typeAlias alias="Activitylog" type="com.cslc.dao.activitylog.Activitylog" />
+
+	<sql id="Activitylog.RESULT">
+		accountid,activityid,score,createtime,bonus,id
+	</sql>
+
+	<sql id="Activitylog.WHERE">
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="accountid"> accountid = #accountid:BIGINT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="activityid"> activityid = #activityid:BIGINT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="score"> score = #score:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="createtime"> createtime = #createtime:DATETIME# </isNotEmpty>
+			<isNotEmpty prepend="and" property="createtimeGEt"> createtime <![CDATA[>=]]> #createtimeGEt:DATETIME# </isNotEmpty>
+			<isNotEmpty prepend="and" property="createtimeLt"> createtime <![CDATA[<]]> #createtimeLt:DATETIME# </isNotEmpty>
+			<isNotEmpty prepend="and" property="bonus"> bonus = #bonus:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="id"> id = #id:BIGINT# </isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<select id="Activitylog.selectById" parameterClass="java.lang.Long" resultClass="Activitylog">
+		select <include refid="Activitylog.RESULT" /> from activitylog where id = #id:BIGINT#
+	</select>
+
+	<insert id="Activitylog.insert" parameterClass="Activitylog">
+		insert into activitylog
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="accountid"> accountid </isNotNull>
+			<isNotNull prepend="," property="activityid"> activityid </isNotNull>
+			<isNotNull prepend="," property="score"> score </isNotNull>
+			<isNotNull prepend="," property="createtime"> createtime </isNotNull>
+			<isNotNull prepend="," property="bonus"> bonus </isNotNull>
+			)
+		</dynamic>
+		values
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="accountid"> #accountid:BIGINT# </isNotNull>
+			<isNotNull prepend="," property="activityid"> #activityid:BIGINT# </isNotNull>
+			<isNotNull prepend="," property="score"> #score:INT# </isNotNull>
+			<isNotNull prepend="," property="createtime"> #createtime:DATETIME# </isNotNull>
+			<isNotNull prepend="," property="bonus"> #bonus:DECIMAL# </isNotNull>
+			)
+		</dynamic>
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+			<![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+		</selectKey>
+	</insert>
+
+	<delete id="Activitylog.delete" parameterClass="java.lang.Long">
+		delete from activitylog where id = #id:BIGINT#
+	</delete>
+
+	<update id="Activitylog.update" parameterClass="Activitylog">
+		update activitylog
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="accountid"> accountid = #accountid:BIGINT# </isNotNull>
+			<isNotNull prepend="," property="activityid"> activityid = #activityid:BIGINT# </isNotNull>
+			<isNotNull prepend="," property="score"> score = #score:INT# </isNotNull>
+			<isNotNull prepend="," property="bonus"> bonus = #bonus:DECIMAL# </isNotNull>
+		</dynamic>
+		WHERE id = #id:BIGINT#
+	</update>
+
+	<select id="Activitylog.select" parameterClass="java.util.Map" resultClass="Activitylog">
+		select <include refid="Activitylog.RESULT" /> from activitylog <include refid="Activitylog.WHERE" />
+		<isNotNull prepend="order" property="orderBy"> by $orderBy$ </isNotNull>
+		<isNotNull prepend="limit" property="size"> #first#,#size# </isNotNull>
+	</select>
+
+	<select id="Activitylog.selectCount" parameterClass="java.util.Map" resultClass="java.lang.Long">
+		select count(*) from activitylog <include refid="Activitylog.WHERE" />
+	</select>
+
+	<select id="Activitylog.selectSum" parameterClass="java.util.Map" resultClass="java.lang.Double">
+		select sum($field$) as sumField from activitylog <include refid="Activitylog.WHERE" />
+	</select>
+
+</sqlMap>

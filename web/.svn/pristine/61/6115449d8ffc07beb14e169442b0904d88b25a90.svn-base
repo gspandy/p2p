@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="../style/style.css">
+<section class="investment-main">
+    <div>
+        <div class="investment-up">
+            <ul>
+                <li class="investment-li-li">
+                    <h3>投资本金</h3>
+                    <h4><span class="investment-sp">${amount!}</span>元</h4>
+                </li>
+                <li class="investment-li-middle">
+                    <h3>可获收益</h3>
+                    <h4><span class="investment-sp">${totalincome!}</span>元</h4>
+                </li>
+                <li class="investment-li-li">
+                    <h3>红包返现</h3>
+                    <h4><span class="investment-sp">${bonusasset!}</span>元</h4>
+                </li>
+            </ul>
+        </div>
+       
+       <#if records??>
+        <#list records as l>
+         <div class="invest-main">
+            <div class="invest-item-left">
+                <div><h5 class="invest-h5">${l.name!}</h5></div>
+                <p class="invest-p">&nbsp;本金<span class="invest-letter-rb">${l.amount!}</span>元</p>
+            </div>
+            <div class="invest-item-middle">
+                <div class="invest-count"><img class="invest-back-circle" src="images/count.png" /><span class="invest-letter-y"><span class="invest-letter-y1">${l.days!}</span>天</span></div>
+                <p class="invest-p">收益<span class="invest-letter-y">${l.income!}</span>元</p>
+            </div>
+            <div class="invest-item-right">
+                <div class="invest-position"><span class="invest-collect"><#if l.status?? & l.status=1>募集中</#if><#if l.status?? & l.status=2>募集完成</#if><#if l.status?? & l.status=3>计息中</#if><#if l.status?? & l.status=4>已还款</#if></span ><a class="invest-a" href="#"><img class="invest-img" src="images/yright.png" alt="" /></a></div>
+                <p class="invest-p">红包<span class="invest-letter-rs">${l.bonus!}</span>元</p>
+            </div>
+        </div>
+         </#list>
+       </#if> 
+     
+    </div>
+</section>

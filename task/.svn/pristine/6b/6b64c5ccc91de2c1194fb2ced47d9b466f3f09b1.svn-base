@@ -1,0 +1,22 @@
+package com.task.settlesystem.settle;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+
+@Service("settletask")
+public class SettleTask {
+	
+	@Resource
+	private Sellout sellout;
+	
+	@Resource
+	private ExceedEndtime exceedendtime;
+	
+	public void excute(){
+		sellout.excute();
+		exceedendtime.excute();
+	}
+	
+}

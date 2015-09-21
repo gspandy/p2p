@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+	<typeAlias alias="Analysedayplatform" type="com.cslc.dao.analysedayplatform.Analysedayplatform" />
+
+	<sql id="Analysedayplatform.RESULT">
+		selfitempaysuccessamount,finishselfitemcount,createtime,registcount,joinactivitycount,sendscore,selfitemtodayincome,selfitemtotalamount,smscount,paycount,messagecount,cashbackamount,cashbackfee,sendbonus,finishtaskcount,feedbackcount,payfee,usebonus,selfitempayamount,bindcardcount,usescore,paysuccesscount
+	</sql>
+
+	<sql id="Analysedayplatform.WHERE">
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="selfitempaysuccessamount"> selfitempaysuccessamount = #selfitempaysuccessamount:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="finishselfitemcount"> finishselfitemcount = #finishselfitemcount:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="createtime"> createtime = #createtime:DATETIME# </isNotEmpty>
+			<isNotEmpty prepend="and" property="registcount"> registcount = #registcount:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="joinactivitycount"> joinactivitycount = #joinactivitycount:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="sendscore"> sendscore = #sendscore:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemtodayincome"> selfitemtodayincome = #selfitemtodayincome:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemtotalamount"> selfitemtotalamount = #selfitemtotalamount:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="smscount"> smscount = #smscount:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="paycount"> paycount = #paycount:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="messagecount"> messagecount = #messagecount:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="cashbackamount"> cashbackamount = #cashbackamount:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="cashbackfee"> cashbackfee = #cashbackfee:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="sendbonus"> sendbonus = #sendbonus:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="finishtaskcount"> finishtaskcount = #finishtaskcount:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="feedbackcount"> feedbackcount = #feedbackcount:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="payfee"> payfee = #payfee:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="usebonus"> usebonus = #usebonus:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitempayamount"> selfitempayamount = #selfitempayamount:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="bindcardcount"> bindcardcount = #bindcardcount:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="usescore"> usescore = #usescore:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="paysuccesscount"> paysuccesscount = #paysuccesscount:INT# </isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<insert id="Analysedayplatform.insert" parameterClass="Analysedayplatform">
+		insert into analysedayplatform
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="selfitempaysuccessamount"> selfitempaysuccessamount </isNotNull>
+			<isNotNull prepend="," property="finishselfitemcount"> finishselfitemcount </isNotNull>
+			<isNotNull prepend="," property="createtime"> createtime </isNotNull>
+			<isNotNull prepend="," property="registcount"> registcount </isNotNull>
+			<isNotNull prepend="," property="joinactivitycount"> joinactivitycount </isNotNull>
+			<isNotNull prepend="," property="sendscore"> sendscore </isNotNull>
+			<isNotNull prepend="," property="selfitemtodayincome"> selfitemtodayincome </isNotNull>
+			<isNotNull prepend="," property="selfitemtotalamount"> selfitemtotalamount </isNotNull>
+			<isNotNull prepend="," property="smscount"> smscount </isNotNull>
+			<isNotNull prepend="," property="paycount"> paycount </isNotNull>
+			<isNotNull prepend="," property="messagecount"> messagecount </isNotNull>
+			<isNotNull prepend="," property="cashbackamount"> cashbackamount </isNotNull>
+			<isNotNull prepend="," property="cashbackfee"> cashbackfee </isNotNull>
+			<isNotNull prepend="," property="sendbonus"> sendbonus </isNotNull>
+			<isNotNull prepend="," property="finishtaskcount"> finishtaskcount </isNotNull>
+			<isNotNull prepend="," property="feedbackcount"> feedbackcount </isNotNull>
+			<isNotNull prepend="," property="payfee"> payfee </isNotNull>
+			<isNotNull prepend="," property="usebonus"> usebonus </isNotNull>
+			<isNotNull prepend="," property="selfitempayamount"> selfitempayamount </isNotNull>
+			<isNotNull prepend="," property="bindcardcount"> bindcardcount </isNotNull>
+			<isNotNull prepend="," property="usescore"> usescore </isNotNull>
+			<isNotNull prepend="," property="paysuccesscount"> paysuccesscount </isNotNull>
+			)
+		</dynamic>
+		values
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="selfitempaysuccessamount"> #selfitempaysuccessamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="finishselfitemcount"> #finishselfitemcount:INT# </isNotNull>
+			<isNotNull prepend="," property="createtime"> #createtime:DATETIME# </isNotNull>
+			<isNotNull prepend="," property="registcount"> #registcount:INT# </isNotNull>
+			<isNotNull prepend="," property="joinactivitycount"> #joinactivitycount:INT# </isNotNull>
+			<isNotNull prepend="," property="sendscore"> #sendscore:INT# </isNotNull>
+			<isNotNull prepend="," property="selfitemtodayincome"> #selfitemtodayincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemtotalamount"> #selfitemtotalamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="smscount"> #smscount:INT# </isNotNull>
+			<isNotNull prepend="," property="paycount"> #paycount:INT# </isNotNull>
+			<isNotNull prepend="," property="messagecount"> #messagecount:INT# </isNotNull>
+			<isNotNull prepend="," property="cashbackamount"> #cashbackamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="cashbackfee"> #cashbackfee:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="sendbonus"> #sendbonus:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="finishtaskcount"> #finishtaskcount:INT# </isNotNull>
+			<isNotNull prepend="," property="feedbackcount"> #feedbackcount:INT# </isNotNull>
+			<isNotNull prepend="," property="payfee"> #payfee:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="usebonus"> #usebonus:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitempayamount"> #selfitempayamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="bindcardcount"> #bindcardcount:INT# </isNotNull>
+			<isNotNull prepend="," property="usescore"> #usescore:INT# </isNotNull>
+			<isNotNull prepend="," property="paysuccesscount"> #paysuccesscount:INT# </isNotNull>
+			)
+		</dynamic>
+	</insert>
+
+	<delete id="Analysedayplatform.delete" parameterClass="java.lang.Long">
+		delete from analysedayplatform where id = #id:BIGINT#
+	</delete>
+
+	<update id="Analysedayplatform.update" parameterClass="Analysedayplatform">
+		update analysedayplatform
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="selfitempaysuccessamount"> selfitempaysuccessamount = #selfitempaysuccessamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="finishselfitemcount"> finishselfitemcount = #finishselfitemcount:INT# </isNotNull>
+			<isNotNull prepend="," property="registcount"> registcount = #registcount:INT# </isNotNull>
+			<isNotNull prepend="," property="joinactivitycount"> joinactivitycount = #joinactivitycount:INT# </isNotNull>
+			<isNotNull prepend="," property="sendscore"> sendscore = #sendscore:INT# </isNotNull>
+			<isNotNull prepend="," property="selfitemtodayincome"> selfitemtodayincome = #selfitemtodayincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemtotalamount"> selfitemtotalamount = #selfitemtotalamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="smscount"> smscount = #smscount:INT# </isNotNull>
+			<isNotNull prepend="," property="paycount"> paycount = #paycount:INT# </isNotNull>
+			<isNotNull prepend="," property="messagecount"> messagecount = #messagecount:INT# </isNotNull>
+			<isNotNull prepend="," property="cashbackamount"> cashbackamount = #cashbackamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="cashbackfee"> cashbackfee = #cashbackfee:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="sendbonus"> sendbonus = #sendbonus:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="finishtaskcount"> finishtaskcount = #finishtaskcount:INT# </isNotNull>
+			<isNotNull prepend="," property="feedbackcount"> feedbackcount = #feedbackcount:INT# </isNotNull>
+			<isNotNull prepend="," property="payfee"> payfee = #payfee:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="usebonus"> usebonus = #usebonus:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitempayamount"> selfitempayamount = #selfitempayamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="bindcardcount"> bindcardcount = #bindcardcount:INT# </isNotNull>
+			<isNotNull prepend="," property="usescore"> usescore = #usescore:INT# </isNotNull>
+			<isNotNull prepend="," property="paysuccesscount"> paysuccesscount = #paysuccesscount:INT# </isNotNull>
+		</dynamic>
+		WHERE id = #id:BIGINT#
+	</update>
+
+	<select id="Analysedayplatform.select" parameterClass="java.util.Map" resultClass="Analysedayplatform">
+		select <include refid="Analysedayplatform.RESULT" /> from analysedayplatform <include refid="Analysedayplatform.WHERE" />
+		<isNotNull prepend="order" property="orderBy"> by $orderBy$ </isNotNull>
+		<isNotNull prepend="limit" property="size"> #first#,#size# </isNotNull>
+	</select>
+
+	<select id="Analysedayplatform.selectCount" parameterClass="java.util.Map" resultClass="java.lang.Long">
+		select count(*) from analysedayplatform <include refid="Analysedayplatform.WHERE" />
+	</select>
+
+	<select id="Analysedayplatform.selectSum" parameterClass="java.util.Map" resultClass="java.lang.Double">
+		select sum($field$) from analysedayplatform <include refid="Analysedayplatform.WHERE" />
+	</select>
+
+</sqlMap>

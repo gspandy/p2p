@@ -1,0 +1,35 @@
+<#include "/crm/menu.ftl" />
+
+<table class="tables">
+	<tr class="th">
+		<td>进出类型</td>
+		<td>创建时间</td>
+		<td>使用时间</td>
+		<td>积分</td>
+		<td>状态</td>
+		<td>来源渠道</td>
+	</tr>
+	<#if score??>
+		<tr class="th">
+			<td>${score.inouttype!}</td>
+			<td><#if score.createtime??>${score.createtime?string('yyyy-MM-dd')}</#if></td>
+			<td><#if score.submittime??>${score.usetime?string('yyyy-MM-dd')}</#if></td>
+			<td>${score.score!}</td>
+			<td>${score.status!}</td>
+			<td>${score.channel!}</td>
+		</tr>
+	</#if>
+	
+	<#if list?exists>
+	<#list list as p>
+	<tr>
+		<td align="left">阿桑地方</td>
+		<td align="left">123</td>
+		<td width="80">阿桑地方</td>
+		<td width="80">
+			<a href="/adminapi/add.html">编辑</a>
+		</td>
+	</tr>
+	</#list>
+	</#if>
+</table>

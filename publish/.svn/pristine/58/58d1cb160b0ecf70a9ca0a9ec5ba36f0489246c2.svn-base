@@ -1,0 +1,184 @@
+/* -----------------------框架----------------------- */
+.header {
+	text-align: center;
+	min-width: 1020px;
+}
+
+.bar {
+	cursor: pointer;
+	margin: 3px 0 0 0;
+	padding: 4px 18px 4px 18px;
+	padding-top: 8px\9;
+	text-decoration: none;
+	color: white;
+	border: 1px solid white;
+}
+#bars a:hover{color:white;background: #E8000C;}
+
+.center {
+	text-align: center;
+}
+
+.center .content {
+	text-align: left;
+	margin: 0 auto;
+	width: 1010px;
+}
+
+.footer {
+	clear: both;
+	font: 13px "宋体";
+	color: #999999;
+	text-align: center;
+	overflow: hidden;
+	line-height: 20px;
+	margin: 0 auto;
+	width: 1010px;
+}
+
+/* -----------------------部件----------------------- */
+
+/* 全局 */
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	font: 13px microsoft yahei;
+	color: #333333;
+}
+
+img {
+	border: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #6D6D6D;
+}
+
+a:hover {
+	color: #EE1D23;
+}
+
+textarea {
+	width: 400px;
+	height: 100px;
+}
+
+.clear {
+	clear: both;
+}
+
+/* 提交按钮 */
+.submit_div {
+	width: 832px;
+}
+
+.submit {
+	cursor: pointer;
+	margin: 3px 0 0 0;
+	padding: 4px 18px 4px 18px;
+	padding-top: 8px\9;
+	text-decoration: none;
+	color: white;
+	border: 1px solid #E8000C;
+	background: #E8000C;
+}
+
+/* -----------------------模块----------------------- */
+.tables {
+	margin-bottom: 7px;
+	border-collapse: collapse;
+	width: 832px;
+	text-align: center;
+}
+
+.tables .th {
+	
+}
+
+.tables tr {
+	height: 27px;
+}
+
+.tables td {
+	border: 1px solid #ccc;
+	padding: 3px;
+}
+
+.tables a {
+	text-decoration: none;
+}
+
+.tables .right-text {
+	background: #F2F2F2;
+	width: 200px;
+	padding: 3px;
+	height: 20px;
+}
+
+/* 翻页 */
+.pages {
+	float: left;
+	margin: 12px auto;
+	color: #6D6D6D;
+	text-align: center;
+	width: 100%;
+}
+
+.pages a {
+	padding: 2px 5px 2px 5px;
+	color: #6D6D6D;
+	margin-right: 5px;
+	text-decoration: none;
+}
+
+.pages a:hover {
+	color: white;
+	background: #6D6D6D;
+}
+
+.pages span.current {
+	padding: 2px 5px 2px 5px;
+	font-weight: bold;
+	color: white;
+	background: #E8000C;
+}
+
+.admin-left-menu {
+	float: left;
+	border: 1px solid #DBDBDB;
+	padding: 10px;
+	line-height: 40px;
+	width: 149px;
+	margin: 0 7px 7px 0;
+}
+
+.admin-left-menu a {
+	margin-left: 10px;
+	text-decoration: none;
+	color: #6D6D6D;
+}
+
+.admin-left-menu .menu_selected {
+	color: #E8000C;
+	font-weight:bold;
+}
+
+.admin-right-content {
+	float: right;
+	border: 1px solid #DBDBDB;
+	width: 810px;
+	padding: 10px;
+	margin-bottom: 5px;
+}
+
+.line {
+	min-width: 1010px;
+	height: 32px;
+}

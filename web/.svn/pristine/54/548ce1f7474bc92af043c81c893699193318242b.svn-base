@@ -1,0 +1,12 @@
+<section>
+    <ul>
+        <li class="describe-li">
+            <div class="describe-item"><h2 class="describe-h2"><img  class="describe-img" src="images/blackpoint.png">资金用途</h2></div>
+            <h3 class="describe-h3">借款方：某某某</h3>
+        </li>
+        <li class="describe-li">
+            <div class="describe-item"><h2 class="describe-h2"><img  class="describe-img" src="images/blackpoint.png">抵押物描述</h2></div>
+            <h3 class="describe-h3">借款方：某某某</h3>
+        </li>
+    </ul>
+</section>

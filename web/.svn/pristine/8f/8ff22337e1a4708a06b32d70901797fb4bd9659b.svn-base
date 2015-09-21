@@ -1,0 +1,104 @@
+package com.h5.action;
+
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.alibaba.fastjson.JSONObject;
+import com.cslc.dao.selfitem.Selfitem;
+import com.cslc.dao.selfitem.SelfitemDao;
+import com.cslc.dao.selfitemproject.Selfitemproject;
+import com.cslc.dao.selfitemproject.SelfitemprojectDao;
+import com.cslc.service.BizService;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+
+@ParentPackage("web")
+@Namespace("/")
+public class DetailAction extends BaseAction{
+	@Resource
+	 private SelfitemprojectDao  selfitemprojectDao;
+	
+	@Resource
+	 private SelfitemDao  selfitemDao;
+	
+	@Resource
+	 private BizService  bizService;
+	
+	// 项目描述
+    @Action("describe")
+    public String describe(){
+    	String selfitemid = request.getParameter("selfitemid");
+    	
+    	Selfitem item = selfitemDao.selectById(Long.parseLong(selfitemid));
+    	Long projectid = item.getSelfitemprojectid();
+    	if(null!=projectid){
+    		Selfitemproject project = selfitemprojectDao.selectById(projectid);
+    		if(null!=project){
+    			String json = project.getJson();
+    			Map<String, Object> map  = (Map<String, Object>) JSONObject.parse(json);
+    			request.setAttribute("zijinyongtu", map.get("zijinyongtu"));
+    			request.setAttribute("diyawu", map.get("diyawu"));
+    		}
+    	}
+    	
+    	 return layout(null, null, "项目描述", "/h5/describe.ftl", SystemConstant.LAYOUT_H5);
+    }
+    
+    
+    //资金安全
+    @Action("safeguard")
+    public String safeguard(){
+        String selfitemid = request.getParameter("selfitemid");
+    	
+    	Selfitem item = selfitemDao.selectById(Long.parseLong(selfitemid));
+    	Long projectid = item.getSelfitemprojectid();
+    	if(null!=projectid){
+    		Selfitemproject project = selfitemprojectDao.selectById(projectid);
+    		if(null!=project){
+    			String json = project.getJson();
+    			Map<String, Object> map  = (Map<String, Object>) JSONObject.parse(json);
+    			request.setAttribute("zijinyongtu", map.get("zijinyongtu"));
+    			request.setAttribute("zijinyongtu", map.get("diyawu"));
+    		}
+    	}
+    	
+    	
+    	
+    	return layout(null, null, "资金安全", "/h5/safeguard.ftl", SystemConstant.LAYOUT_H5);
+    }
+    
+    
+    
+    
+  //还款方式
+    @Action("repayment")
+    public String repayment(){
+        String selfitemid = request.getParameter("selfitemid");
+    	
+    	Selfitem item = selfitemDao.selectById(Long.parseLong(selfitemid));
+    	Long projectid = item.getSelfitemprojectid();
+    	if(null!=projectid){
+    		Selfitemproject project = selfitemprojectDao.selectById(projectid);
+    		if(null!=project){
+    			String json = project.getJson();
+    			Map<String, Object> map  = (Map<String, Object>) JSONObject.parse(json);
+    			request.setAttribute("zijinyongtu", map.get("zijinyongtu"));
+    			request.setAttribute("zijinyongtu", map.get("diyawu"));
+    		}
+    	}
+    	
+    	
+    	
+    	return layout(null, null, "还款方式", "/h5/repayment.ftl", SystemConstant.LAYOUT_H5);
+    }
+    
+    
+    
+    
+    
+}

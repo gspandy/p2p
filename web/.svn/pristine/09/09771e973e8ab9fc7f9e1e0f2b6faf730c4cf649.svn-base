@@ -1,0 +1,164 @@
+package com.h5.action;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.cslc.dao.account.Account;
+import com.cslc.dao.account.AccountDao;
+import com.cslc.dao.accountasset.Accountasset;
+import com.cslc.dao.accountasset.AccountassetDao;
+import com.cslc.dao.accountselfitem.Accountselfitem;
+import com.cslc.dao.accountselfitem.AccountselfitemDao;
+import com.cslc.dao.selfitem.Selfitem;
+import com.cslc.dao.selfitem.SelfitemDao;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+import com.platform.util.PageUtil;
+import com.platform.util.StringUtil;
+
+@ParentPackage("web")
+public class SelfitemAction extends BaseAction {
+
+	@Autowired
+	private SelfitemDao selfitemDao;
+
+	@Autowired
+	private AccountselfitemDao accountselfitemDao;
+
+	@Autowired
+	private AccountDao accountDao;
+	
+	@Autowired
+	private AccountassetDao accountassetDao;
+
+
+	/**
+	 * 
+	 * 
+	 */
+	private static final long serialVersionUID = -3973123213063479294L;
+
+	// 产品购买人列表
+	@Action("accountlist")
+	public String accountlist() {
+		Long selfitemid = Long.parseLong(getParameter("selfitemid"));
+		String perCount = getParameter("perCount");
+		String pageNo = getParameter("pageNo");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("selfitemid", selfitemid);
+		map.put("orderBy", "createtime desc");
+		PageUtil.getMap(map, pageNo, accountselfitemDao.selectCount(map), perCount);
+		List<Accountselfitem> list = accountselfitemDao.select(map);
+
+		List<Map<String, Object>> accountlist = new ArrayList<Map<String, Object>>();
+		for (Accountselfitem i : list) {
+			Map<String, Object> m = new HashMap<String, Object>();
+			Account account = accountDao.selectById(i.getAccountid());
+			m.put("name", StringUtil.encryptName(account.getRealname()));
+			m.put("amount", StringUtil.getFormatAmount(i.getAmount()));
+			m.put("createtime", StringUtil.convertDateToString(i.getCreatetime(), "yyyy-MM-dd HH:mm"));
+			m.put("income", StringUtil.getFormatAmount(i.getTotalincome()));
+			accountlist.add(m);
+		}
+		request.setAttribute("records", accountlist);
+
+
+		return layout(null, null, "已购人数", "/h5/accountlist.ftl", SystemConstant.LAYOUT_H5);
+	}
+	
+	
+	    // 我的投资
+		@Action("selfitemlist")
+		public String selfitemlist() {
+			String accountid = getParameter("accountid");
+			String perCount = getParameter("perCount");
+			String pageNo = getParameter("pageNo");
+			
+			Accountasset accountasset = accountassetDao.selectById(Long.parseLong(accountid));
+			
+			//我的红包
+            request.setAttribute("bonusasset", StringUtil.getFormatAmount(accountasset.getBonusasset()));
+            //定期本金
+            request.setAttribute("amount", StringUtil.getFormatAmount(accountasset.getSelfitemamount()));
+            //已获收益
+            request.setAttribute("totalincome", StringUtil.getFormatAmount(accountasset.getSelfitemtotalincome()));
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("accountid", accountid);
+			map.put("orderBy", "createtime desc");
+			PageUtil.getMap(map, pageNo, accountselfitemDao.selectCount(map), perCount);
+			List<Accountselfitem> list = accountselfitemDao.select(map);
+
+			List<Map<String, Object>> accountlist = new ArrayList<Map<String, Object>>();
+			for (Accountselfitem i : list) {
+				Map<String, Object> m = new HashMap<String, Object>();
+				Selfitem item = selfitemDao.selectById(i.getSelfitemid());
+				m.put("name", item.getName());
+				m.put("title", item.getActivitytitle());
+				m.put("amount", StringUtil.getFormatAmount(i.getAmount()));
+				m.put("status", item.getStatus());
+				m.put("annualrate", item.getAnnualrate());
+				m.put("days", item.getIncomedays());
+				m.put("income", StringUtil.getFormatAmount(i.getTotalincome()-i.getRestincome()));
+				accountlist.add(m);
+			}
+			
+			request.setAttribute("records", accountlist);
+			
+			return layout(null, null, "我的投资", "/h5/selfitemlist.ftl", SystemConstant.LAYOUT_H5);
+		}
+		
+		
+		// 我的投资 日历
+		@Action("selfitemdate")
+		public String selfitemdate() {
+			String accountid = getParameter("accountid");
+			String perCount = getParameter("perCount");
+			String pageNo = getParameter("pageNo");
+			
+            Accountasset accountasset = accountassetDao.selectById(Long.parseLong(accountid));
+			
+			//我的红包
+            request.setAttribute("bonusasset", StringUtil.getFormatAmount(accountasset.getBonusasset()));
+            //定期本金
+            request.setAttribute("amount", StringUtil.getFormatAmount(accountasset.getSelfitemamount()));
+            //已获收益
+            request.setAttribute("totalincome", StringUtil.getFormatAmount(accountasset.getSelfitemtotalincome()));
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("accountid", accountid);
+			map.put("orderBy", "createtime desc");
+			PageUtil.getMap(map, pageNo, accountselfitemDao.selectCount(map), perCount);
+			List<Accountselfitem> list = accountselfitemDao.select(map);
+			request.setAttribute("list", list);
+			
+			
+
+			List<Map<String, Object>> accountlist = new ArrayList<Map<String, Object>>();
+			for (Accountselfitem i : list) {
+				Map<String, Object> m = new HashMap<String, Object>();
+				Selfitem item = selfitemDao.selectById(i.getSelfitemid());
+				m.put("name", item.getName());
+				m.put("title", item.getActivitytitle());
+				m.put("amount", StringUtil.getFormatAmount(i.getAmount()));
+				m.put("status", item.getStatus());
+				m.put("annualrate", item.getAnnualrate());
+				m.put("days", item.getIncomedays());
+				m.put("income", StringUtil.getFormatAmount(i.getTotalincome()-i.getRestincome()));
+				accountlist.add(m);
+			}
+			
+			request.setAttribute("records", accountlist);
+			
+			return layout(null, null, "我的投资", "/h5/accountlist.ftl", SystemConstant.LAYOUT_H5);
+			
+		}
+
+}

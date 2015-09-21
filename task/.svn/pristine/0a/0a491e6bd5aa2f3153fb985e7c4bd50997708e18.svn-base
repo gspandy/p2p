@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!-- 新生代付
+	<bean id="newPayBatchPayTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.NewPayBatchPayTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="newPayBatchPayCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="newPayBatchPayTask" />
+		<property name="cronExpression" value="0 0 12 * * ?" />
+	</bean> -->
+
+	<!-- 催款短信，每天发送                  -->
+	<bean id="batchSendSmsTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.BatchSendSmsTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="batchSendSmsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="batchSendSmsTask" />
+		<property name="cronExpression" value="${task.batchSendSmsTask.cronExpression}" />
+	</bean>
+	
+	<!-- 失败短信，每分钟发送                  -->
+	<bean id="autoSendSmsTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.AutoSendSmsTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="autoSendSmsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="autoSendSmsTask" />
+		<property name="cronExpression" value="0 * * * * ?" />
+	</bean>
+	
+	<!-- 定时更新，每分钟执行                  -->
+	<bean id="autoUpdateTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.AutoUpdateTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="autoUpdateCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="autoUpdateTask" />
+		<property name="cronExpression" value="0 * * * * ?" />
+	</bean>
+	
+	<!-- 存储过程，每天执行               -->
+	<bean id="procedureTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.ProcedureTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="procedureCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="procedureTask" />
+		<property name="cronExpression" value="0 15 0 * * ?" />
+	</bean>
+	
+	<!-- 点点奖励对账，找出平账和不平账的记录，每天凌晨过5分执行             -->
+	<bean id="fcsUserBonusCheckTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.FcsUserBonusCheckTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="fcsUserBonusCheckCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail"  ref="fcsUserBonusCheckTask" />
+		<property name="cronExpression"  value="0 5 0 * * ?" />
+	</bean>
+	
+	<!-- 点点奖励汇总JOB,每日凌晨0点20分执行，对昨天的奖励情况进行汇总             -->
+	<bean id="fcsAccountBonusCheckTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.FcsAccountBonusCheckTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="fcsBonusCheckCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail"  ref="fcsAccountBonusCheckTask" />
+		<property name="cronExpression"  value="0 20 0 * * ?" />
+	</bean>
+	
+	<!-- 交易成功订单财务汇总JOB,每日凌晨0点40分执行，对昨天的交易成功的订单进行汇总 		   -->
+	<bean id="fcsAccountTradeCheckTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.FcsAccountTradeCheckTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="fcsTradeCheckCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail"  ref="fcsAccountTradeCheckTask" />
+		<property name="cronExpression"  value="0 40 0 * * ?" />
+	</bean>
+	
+	<!-- 新的交易成功订单财务汇总JOB,每日凌晨1点10分执行，对昨天的交易成功的订单进行汇总 -->
+	<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" id="newFcsTradeCheckTask">
+		<property name="targetObject">
+			<bean class="com.task.NewFcsTradeCheckTask"/>
+		</property>
+		<property name="targetMethod" value="execute"/>
+		<property name="concurrent" value="false"/>
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.CronTriggerBean" id="newFcsTradeCheckCronTrigger">
+		<property name="jobDetail" ref="newFcsTradeCheckTask"/>
+		<property name="cronExpression" value="0 10 1 * * ?"/>
+	</bean>
+	
+	<!-- 获取新生流水号，每隔2时执行			-->
+	<bean id="newpayBatchQueryPayorderidTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.NewpayBatchQueryPayorderidTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="newpayBatchQueryPayorderidCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail"  ref="newpayBatchQueryPayorderidTask" />
+		<property name="cronExpression"  value="0 10 0/2 * * ?" />
+	</bean>
+	
+	<!-- 谦通短信发送结果查询，每20秒执行			-->
+	<bean id="smsQueryResultQianTongTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.SmsQueryResultQianTongTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="smsQueryResultQianTongTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail"  ref="smsQueryResultQianTongTask" />
+		<property name="cronExpression"  value="*/20 * * * * ?" />
+	</bean>	
+	
+	<!-- 消息推送，每分钟执行                  -->
+	<bean id="pushMessageTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.PushMessageTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="pushMessageCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="pushMessageTask" />
+		<property name="cronExpression" value="10 * * * * ?" />
+	</bean>
+	
+	
+	
+	
+	<!-- 点点宝点币积分发放job                  -->
+	<bean id="scoreDDBGetTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.ScoreDDBGetTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="scoreDDBGetCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="scoreDDBGetTask" />
+		<property name="cronExpression" value="0 28 0/1 * * ?" />
+	</bean>
+	
+	<!-- 优选理财积分发放job     -->    
+	<bean id="scoreSelfitemGetTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.ScoreSelfitemGetTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="scoreSelfitemGetCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+		<property name="jobDetail" ref="scoreSelfitemGetTask" />
+		<property name="cronExpression" value="0 0/10 * * * ?" />
+
+	</bean>
+	
+	<!-- 邀请规则发放job     -->    
+	<bean id="scoreInviteGetTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.ScoreInviteGetTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="scoreInviteGetCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+		<property name="jobDetail" ref="scoreInviteGetTask" />
+		<property name="cronExpression" value="0 0/20 * * * ?" />
+
+	</bean>        
+	
+	<!-- 渠道规则发放job     -->    
+	<bean id="scoreChannelGetTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.ScoreChannelGetTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="scoreChannelGetCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+		<property name="jobDetail" ref="scoreChannelGetTask" />
+		<property name="cronExpression" value="0 0/30 * * * ?" />
+
+	</bean> 
+	
+	<!-- 点币过期job     -->    
+	<bean id="scoreExpireTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.ScoreExpireExecuteTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="scoreExpireCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+		<property name="jobDetail" ref="scoreExpireTask" />
+		<property name="cronExpression" value="0 31 0 * * ?" />
+
+	</bean>    
+	
+	<!-- 获取手机归属地信息                  -->
+	<bean id="dsAccountVariableTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.DsAccountVariableTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="dsAccountVariableCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="dsAccountVariableTask" />
+		<property name="cronExpression" value="20 * * * * ?" />
+	</bean>
+	
+	<!-- 测试]
+	<bean id="testSimpleTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.ProcedureTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="testSimpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="testSimpleTask" />
+		<property name="startDelay" value="1000" />
+		<property name="repeatInterval" value="100000000" />
+	</bean> -->
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!-- <ref bean="testSimpleTrigger" /> 
+				<ref bean="fcsTradeCheckCronTrigger" />
+				<ref bean="scoreChannelGetCronTrigger" />-->
+				<!-- -->
+				
+				<!-- <ref bean="foundationCronTrigger" />
+				<ref bean="procedureCronTrigger" />
+				<ref bean="autoUpdateCronTrigger" />
+				<ref bean="fcsUserBonusCheckCronTrigger" /> -->
+				<ref bean="batchSendSmsCronTrigger" />
+				<!-- <ref bean="autoSendSmsCronTrigger" />
+				<ref bean="fcsBonusCheckCronTrigger" />
+				<ref bean="newpayBatchQueryPayorderidCronTrigger" />
+				<ref bean="newFcsTradeCheckCronTrigger"/>
+				<ref bean="smsQueryResultQianTongTrigger" /> 
+				
+				 <ref bean="scoreDDBGetCronTrigger" />
+				<ref bean="scoreSelfitemGetCronTrigger" />
+				<ref bean="scoreInviteGetCronTrigger" />
+				<ref bean="scoreExpireCronTrigger"/> 
+				<ref bean="pushMessageCronTrigger" />
+				<ref bean="dsAccountVariableCronTrigger" /> -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 理财基金,收益,过期定时任务               -->
+	<bean id="foundationTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.FoundationTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="foundationCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail"  ref="foundationTask" />
+		<property name="cronExpression"  value="0 29 0 * * ?" />
+	</bean>
+	
+	<!-- 理财基金JOB测试用，每分钟执行                  -->
+	<!-- <bean id="foundationTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.task.FoundationTask" />
+		</property>
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="foundationCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="foundationTask" />
+		<property name="cronExpression" value="0 * * * * ?" />
+	</bean> -->
+
+</beans>
+

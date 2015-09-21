@@ -1,0 +1,42 @@
+<#include "/crm/menu.ftl" />
+
+<table class="tables">
+	
+	<tr class="th">
+		<td>支付渠道</td>
+		<td>手机号</td>
+		<td>银行卡ID</td>
+		<td>订单号</td>
+		<td>第三方订单号</td>
+		<td>投资本金</td>
+		<td>费率</td>
+		<td>创建时间</td>
+	</tr>
+	<#if trades??>
+		<#list trades as trade>
+			<tr class="th">
+				<td>${trade.paychannel!}</td>
+				<td>${trade.mobile!} </td>
+				<td>${trade.bankcardid!}</td>
+				<td>${trade.orderno!}</td>
+				<td>${trade.payorderno!}</td>
+				<td>${trade.amount!}</td>
+				<td>${trade.fee!}</td>
+				<td><#if trade.createtime??>${trade.createtime?string('yyyy-MM-dd')}</#if></td>
+			</tr>
+		</#list>
+	</#if>
+	
+	<#if list?exists>
+	<#list list as p>
+	<tr>
+		<td align="left">阿桑地方</td>
+		<td align="left">123</td>
+		<td width="80">阿桑地方</td>
+		<td width="80">
+			<a href="/adminapi/add.html">编辑</a>
+		</td>
+	</tr>
+	</#list>
+	</#if>
+</table>

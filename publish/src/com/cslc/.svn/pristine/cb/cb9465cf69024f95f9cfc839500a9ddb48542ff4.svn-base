@@ -1,0 +1,126 @@
+package com.cslc.dao.accountselfitem;
+
+import java.util.Date;
+import com.platform.base.BaseEntity;
+
+public class Accountselfitem extends BaseEntity {
+	
+	private Long accountid;
+	private Long bankcardid;
+	private Integer score;
+	private Double amount;
+	private Date createtime;
+	private Date incometime;
+	private Double bonus;
+	private Double totalincome;
+	private Double restincome;
+	private Double dayincome;
+	private Long selfitemid;
+	private Date backtime;
+	private Byte status;
+
+	public Long getBankcardid() {
+		return bankcardid;
+	}
+
+	public void setBankcardid(Long bankcardid) {
+		this.bankcardid = bankcardid;
+	}
+
+	public Long getAccountid(){
+		return accountid;
+	}
+
+	public void setAccountid(Long accountid) {
+		this.accountid = accountid;
+	}
+
+	public Integer getScore(){
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
+	public Double getAmount(){
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	public Date getCreatetime(){
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
+	public Date getIncometime(){
+		return incometime;
+	}
+
+	public void setIncometime(Date incometime) {
+		this.incometime = incometime;
+	}
+
+	public Double getBonus(){
+		return bonus;
+	}
+
+	public void setBonus(Double bonus) {
+		this.bonus = bonus;
+	}
+
+	public Double getTotalincome(){
+		return totalincome;
+	}
+
+	public void setTotalincome(Double totalincome) {
+		this.totalincome = totalincome;
+	}
+
+	public Double getRestincome(){
+		return restincome;
+	}
+
+	public void setRestincome(Double restincome) {
+		this.restincome = restincome;
+	}
+
+	public Double getDayincome(){
+		return dayincome;
+	}
+
+	public void setDayincome(Double dayincome) {
+		this.dayincome = dayincome;
+	}
+
+	public Long getSelfitemid(){
+		return selfitemid;
+	}
+
+	public void setSelfitemid(Long selfitemid) {
+		this.selfitemid = selfitemid;
+	}
+
+	public Date getBacktime(){
+		return backtime;
+	}
+
+	public void setBacktime(Date backtime) {
+		this.backtime = backtime;
+	}
+
+	public Byte getStatus(){
+		return status;
+	}
+
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
+
+}

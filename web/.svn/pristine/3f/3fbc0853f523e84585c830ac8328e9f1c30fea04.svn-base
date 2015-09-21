@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="../style/style.css">
+<section>
+    <h2 class="red-h2"><span>${bonusasset!}</span>元</h2>
+<#if records??>
+   <#list records as l>
+    <div class="red-item">
+        <h3 class="red-h3">${l.title!}</h3>
+        <div class="red-middle">
+            <p class="red-p1">${l.bonus!}<span>元</span></p>
+            <p class="red-p2-1"><#if l.status?? & l.status=0>未使用</#if><#if l.status?? & l.status=1>返现中</#if><#if l.status?? & l.status=2>已返现</#if><#if l.status?? & l.status=3>已过期</#if></p>
+        </div>
+        <h4 class="red-h4">有效期：${(l.endtime)!}</h4>
+    </div>
+  </#list>
+</#if>
+
+
+</section>

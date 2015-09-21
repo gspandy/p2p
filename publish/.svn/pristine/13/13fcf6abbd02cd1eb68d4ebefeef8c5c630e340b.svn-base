@@ -1,0 +1,38 @@
+<#include "/crm/menu.ftl" />
+
+<table class="tables">
+	
+	<tr class="th">
+		<td>每日收益</td>
+		<td>总收益 </td>
+		<td>待收收益</td>
+		<td>投资本金</td>
+		<td>获得积分</td>
+		<td>可获红包</td>
+	</tr>
+	<#if accountselfitems??>
+		<#list accountselfitems as accountselfitem>
+			<tr class="th">
+				<td>${accountselfitem.dayincome!}</td>
+				<td>${accountselfitem.totalincome!} </td>
+				<td>${accountselfitem.restincome!}</td>
+				<td>${accountselfitem.amount!}</td>
+				<td>${accountselfitem.score!}</td>
+				<td>${accountselfitem.bonus!}</td>
+			</tr>
+		</#list>
+	</#if>
+	
+	<#if list?exists>
+	<#list list as p>
+	<tr>
+		<td align="left">阿桑地方</td>
+		<td align="left">123</td>
+		<td width="80">阿桑地方</td>
+		<td width="80">
+			<a href="/adminapi/add.html">编辑</a>
+		</td>
+	</tr>
+	</#list>
+	</#if>
+</table>

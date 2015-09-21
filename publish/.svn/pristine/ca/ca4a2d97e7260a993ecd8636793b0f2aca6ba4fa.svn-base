@@ -1,0 +1,13 @@
+<div class="admin-left-menu">
+	<a href="/adminrequirement/my.html" <#if PageMenu?? && PageMenu='my'>class="menu_selected"</#if>>我参与的</a><br>
+	<a href="/adminrequirement/select.html" <#if PageMenu?? && PageMenu='all'>class="menu_selected"</#if>>所有项目</a><br>
+	<a href="/adminrequirement/pool.html" <#if PageMenu?? && PageMenu='pool'>class="menu_selected"</#if>>需求池</a><br>
+	<a href="/adminrequirement/functions.html" <#if PageMenu?? && PageMenu='functions'>class="menu_selected"</#if>>上线公告</a><br>
+	<a href="/adminrequirement/bankcardlimit.html" <#if PageMenu?? && PageMenu='bankcardlimit'>class="menu_selected"</#if>>银行卡限额</a><br>
+	
+	<form action="/adminrequirement/my.html" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="token">
+		<input name="username" value="${username!}" style="width:100px;margin-left:10px;">
+		<input type="submit" class="submit" style="margin-left:10px;" value="找人">
+	</form>
+</div>

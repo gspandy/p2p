@@ -1,0 +1,99 @@
+package com.cslc.dao.supportbank;
+
+import java.util.Date;
+import com.platform.base.BaseEntity;
+
+public class Supportbank extends BaseEntity {
+
+	private String name;
+	private Byte channel;
+	private String simplename;
+	private Double monthmaxamount;
+	private Long id;
+	private Double singlemaxamount;
+	private String logourl;
+	private Double daymaxamount;
+	private Byte status;
+	private Integer serialno;
+
+	public String getName(){
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Byte getChannel(){
+		return channel;
+	}
+
+	public void setChannel(Byte channel) {
+		this.channel = channel;
+	}
+
+	public String getSimplename(){
+		return simplename;
+	}
+
+	public void setSimplename(String simplename) {
+		this.simplename = simplename;
+	}
+
+	public Double getMonthmaxamount(){
+		return monthmaxamount;
+	}
+
+	public void setMonthmaxamount(Double monthmaxamount) {
+		this.monthmaxamount = monthmaxamount;
+	}
+
+	public Long getId(){
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Double getSinglemaxamount(){
+		return singlemaxamount;
+	}
+
+	public void setSinglemaxamount(Double singlemaxamount) {
+		this.singlemaxamount = singlemaxamount;
+	}
+
+	public String getLogourl(){
+		return logourl;
+	}
+
+	public void setLogourl(String logourl) {
+		this.logourl = logourl;
+	}
+
+	public Double getDaymaxamount(){
+		return daymaxamount;
+	}
+
+	public void setDaymaxamount(Double daymaxamount) {
+		this.daymaxamount = daymaxamount;
+	}
+
+	public Byte getStatus(){
+		return status;
+	}
+
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
+
+	public Integer getSerialno(){
+		return serialno;
+	}
+
+	public void setSerialno(Integer serialno) {
+		this.serialno = serialno;
+	}
+
+}

@@ -1,0 +1,27 @@
+<br><br><br><br>
+
+<div style="color:red;margin-left:436px;">
+	<#if errorMsg??>
+		${errorMsg!}
+	</#if>
+	<br><br>
+</div>
+
+<div class="center">
+	<form id="pass_form" action="/user/password.html" method="post">
+		<input type="hidden" name="token">
+		<input type="hidden" name="url" value="${url!}">
+			旧的密码：　<input name="oldPassword" style="width:210px;" type="password"><br><br>
+			新的密码：　<input id="pass" name="newPassword" style="width:210px;" type="password" /><br><br>
+			确认密码：　<input style="width:210px;" type="password" onblur="check(this)" /><br><br>
+		<input type="button" onclick="submitForm('pass_form')" class="submit" style="margin-left:-72px;margin-left:-68px\9;" value="提交" />
+	</form>
+</div>
+
+<script>
+	function check(obj){
+		if($(obj).val() != $('#pass').val()){
+			alert('密码不一致！');
+		}
+	}
+</script>

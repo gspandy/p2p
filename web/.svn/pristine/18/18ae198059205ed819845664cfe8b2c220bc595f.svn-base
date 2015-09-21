@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="../style/style.css">
+<section>
+<input type="hidden" id="login" name="login" value="${login!}"  >
+<input type="hidden" id="code" name="code" value="${code!}"  >
+    <div class="invite-chaining1">
+        <div class="invite-car-record"><img class="invite-img" src="images/shopcar.png" /><p>邀请奖励</p></div>
+        <div class="invite-red-record"><img class="invite-img" src="images/yredpackge.png" /><p>邀请记录</p></div>
+        <div class="invite-dollar-record"><img class="invite-img" src="images/dollar.png" /><p>收益红包</p></div>
+    </div>
+  
+  <#if records??>
+     <#list records as l>
+    <div class="invite-chaining2">
+        <h2 class="invite-up">${l.title!}</h2>
+        <div class="invite-middle">
+            <div class="middle-1"><span class="middle-1-1">${l.bonus!}</span>元</div>
+            <p class="middle-2"><#if l.status?? & l.status=0>未使用</#if><#if l.status?? & l.status=1>返现中</#if><#if l.status?? & l.status=2>已返现</#if><#if l.status?? & l.status=3>已过期</#if></p>
+            <img src="images/right.png" />
+        </div>
+        <h3 class="invite-down">${(l.backtime?string("yyyy-MM-dd HH:mm:ss"))!}</h3>
+    </div>
+</#list>
+</#if>
+    
+    <script type="text/javascript">
+    var code = $("#code").val();
+    var login = $("#login").val();
+      $(".invite-car-record").on("click", function() {
+			window.location.href = "invite.html?code="+code+"&login="+login+"&newopen";
+		});
+		$(".invite-dollar-record").on("click", function() {
+			window.location.href = "inviteincome.html?code="+code+"&login="+login+"&newopen";
+		});
+		
+</script>

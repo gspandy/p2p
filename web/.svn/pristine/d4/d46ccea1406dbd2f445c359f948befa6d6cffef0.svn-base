@@ -1,0 +1,90 @@
+package com.h5.action;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.alibaba.fastjson.JSONObject;
+import com.cslc.dao.message.Message;
+import com.cslc.dao.message.MessageDao;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+import com.platform.util.PageUtil;
+import com.platform.util.StringUtil;
+import com.platform.util.encrypt.AES;
+
+@ParentPackage("web")
+@Namespace("/")
+public class MessageAction extends BaseAction{
+	
+	
+	 @Resource
+	 private MessageDao messageDao;
+	
+	
+	// 消息列表
+    @Action("messagelist")
+    public String messagelist(){
+//    	String login = request.getParameter("login");
+//		String code = request.getParameter("code");
+    	String login = request.getHeader("login");
+		String code = request.getHeader("code");
+       
+        request.setAttribute("login", login);
+        request.setAttribute("code", code);
+        return layout(null, null, "消息列表", "/h5/messagelist.ftl", SystemConstant.LAYOUT_H5);
+    }
+    
+    
+ // 消息列表
+    @Action("messagelistpage")
+    public void messagelistpage() {
+    	String login = request.getParameter("login");
+		String code = request.getParameter("code");
+//    	String login = request.getHeader("login");
+//		String code = request.getHeader("code");
+        String perCount = getParameter("perCount");
+        String pageNo = getParameter("pageNo");
+        if (null != code && !"".equals(code) && "0".equals(login)){
+			String saccountid = AES.decryptFromBase64(((String)code).replace(" ", "+"), SystemConstant.ACTIVITY_KEY);
+			Long accountid = Long.valueOf(saccountid);
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("accountid", accountid);
+        m.put("orderBy", "status asc,createtime desc");
+        PageUtil.getMap(m, pageNo, messageDao.selectCount(m), perCount);
+        List<Message> list = messageDao.select(m);
+        List<Map<String, Object>> mlist = new ArrayList<Map<String, Object>>();
+        for (Message msg : list) {
+        	if(msg.getStatus()==Message.STATUS_NOT_READ){
+        		msg.setStatus(Message.STATUS_READ);
+        		messageDao.update(msg);
+        	}
+        	
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("messageid", msg.getId());
+            if(msg.getContent().length()>50){
+            	map.put("subcontent", msg.getContent().substring(50)+"...");
+            }
+            map.put("content", msg.getContent());
+            map.put("title", msg.getTitle());
+            map.put("createtime", StringUtil.convertDateToString(msg.getCreatetime(), "yyyy-MM-dd"));
+            mlist.add(map);
+        }
+        ajax(JSONObject.toJSONString(mlist));
+
+      
+       }
+    }
+
+
+
+}

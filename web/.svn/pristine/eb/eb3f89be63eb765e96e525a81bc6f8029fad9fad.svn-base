@@ -1,0 +1,36 @@
+package com.h5.action;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.cslc.dao.accountasset.Accountasset;
+import com.cslc.dao.accountasset.AccountassetDao;
+import com.cslc.dao.accountselfitem.Accountselfitem;
+import com.cslc.dao.accountselfitem.AccountselfitemDao;
+import com.platform.base.BaseAction;
+import com.platform.util.PageUtil;
+
+@ParentPackage("app")
+@Namespace("/")
+public class TestAction extends BaseAction {
+
+	@Resource
+	private AccountassetDao accountassetDao;
+	
+	@Resource
+	private AccountselfitemDao accountselfitemDao;
+
+	@Action("test")
+	public void test() {
+		
+	}
+
+}
+

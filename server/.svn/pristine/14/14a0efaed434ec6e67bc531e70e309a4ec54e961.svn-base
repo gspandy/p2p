@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	
+	<sqlMap resource="com/cslc/dao/account/Account.xml" />
+	<sqlMap resource="com/cslc/dao/accountasset/Accountasset.xml" />
+	<sqlMap resource="com/cslc/dao/accountconfig/Accountconfig.xml" />
+	<sqlMap resource="com/cslc/dao/accountbankcard/Accountbankcard.xml" />
+	<sqlMap resource="com/cslc/dao/accountselfitem/Accountselfitem.xml" />
+	
+	<sqlMap resource="com/cslc/dao/selfitem/Selfitem.xml" />
+	<sqlMap resource="com/cslc/dao/selfitemproject/Selfitemproject.xml" />
+	<sqlMap resource="com/cslc/dao/selfitemagreement/Selfitemagreement.xml" />
+	<sqlMap resource="com/cslc/dao/trade/Trade.xml" />
+	<sqlMap resource="com/cslc/dao/cashback/Cashback.xml" />
+	<sqlMap resource="com/cslc/dao/bonus/Bonus.xml" />
+	<sqlMap resource="com/cslc/dao/reward/Reward.xml" />
+	<sqlMap resource="com/cslc/dao/score/Score.xml" />
+	<sqlMap resource="com/cslc/dao/task/Task.xml" />
+	<sqlMap resource="com/cslc/dao/tasklog/Tasklog.xml" />
+	<sqlMap resource="com/cslc/dao/systemdef/Systemdef.xml" />
+	<sqlMap resource="com/cslc/dao/systemlog/Systemlog.xml" />
+	<sqlMap resource="com/cslc/dao/supportbank/Supportbank.xml" />
+	<sqlMap resource="com/cslc/dao/question/Question.xml" />
+	<sqlMap resource="com/cslc/dao/message/Message.xml" />
+	<sqlMap resource="com/cslc/dao/sms/Sms.xml" />
+	<sqlMap resource="com/cslc/dao/submitcode/Submitcode.xml" />
+	<sqlMap resource="com/cslc/dao/feedback/Feedback.xml" />
+	<sqlMap resource="com/cslc/dao/picture/Picture.xml" />
+	<sqlMap resource="com/cslc/dao/shorturl/Shorturl.xml" />
+	<sqlMap resource="com/cslc/dao/activity/Activity.xml" />
+	<sqlMap resource="com/cslc/dao/activitylog/Activitylog.xml" />
+	
+	<sqlMap resource="com/cslc/dao/analysedayplatform/Analysedayplatform.xml" />
+	<sqlMap resource="com/cslc/dao/analysedayaccount/Analysedayaccount.xml" />
+	
+</sqlMapConfig>
+

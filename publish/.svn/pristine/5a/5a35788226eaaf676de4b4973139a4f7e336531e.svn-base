@@ -1,0 +1,34 @@
+<#include "/crm/menu.ftl" />
+
+<table class="tables">
+	<tr>
+		<th>姓名</th>
+		<td>${(account.realname)!}</td>
+		<th>定期资产</th>
+		<td>${(account.accountasset.selfitemasset)!}</td>
+	</tr>
+	<tr>
+		<th>定期本金</th>
+		<td>${(account.accountasset.selfitemamount)!}</td>
+		<th>定期累计已获收益</th>
+		<td>${(account.accountasset.selfitemtotalincome)!}</td>
+	</tr>
+	<tr>	
+		<th>定期今日收益</th>
+		<td>${(account.accountasset.selfitemtodayincome)!}</td>
+		<th>红包余额</th>
+		<td>${(account.accountasset.bonusasset)!}</td>
+	</tr>
+	<tr>
+		<th>累计红包</th>
+		<td>${(account.accountasset.bonustotal)!}</td>
+		<th>积分余额</th>
+		<td>${(account.accountasset.scoreasset)!}</td>
+	</tr>
+	<tr>	
+		<th>累计积分</th>
+		<td>${(account.accountasset.scoretotal)!}</td>
+		<th></th>
+		<td></td>
+	</tr>
+</table>

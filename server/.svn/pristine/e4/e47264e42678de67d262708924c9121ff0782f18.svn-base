@@ -1,0 +1,13 @@
+system.path=
+web.url=http://192.168.3.199:8084
+image.url=http://192.168.3.199:8084
+
+task.enable=false
+cache.enable=false
+params.encrypt=false
+log.request.url.enable=false
+verify.app.enable=false
+
+mysql.db.url=jdbc\:mysql\://127.0.0.1\:3306/caishulicai?useUnicode\=true&characterEncoding\=utf8
+mysql.db.username=root
+mysql.db.password=f217403798d1e0f

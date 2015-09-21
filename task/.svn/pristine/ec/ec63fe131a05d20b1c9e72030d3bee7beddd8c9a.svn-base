@@ -1,0 +1,12 @@
+package com.task.table;
+
+import org.springframework.stereotype.Service;
+
+@Service("accountassetTask")
+public class AccountassetTask {
+
+	public void execute() {
+		
+	}
+	
+}

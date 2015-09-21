@@ -1,0 +1,36 @@
+<div id="header" style="background:#FEAE11;color:white;padding:10px;">
+	<div style="float:left;width:200px;"><img src="/style/image/logo.png"></div>
+	<div style="float:right;width:200px;text-align:right;">
+		<#if loginUser??>
+			<a href="/admincslc/index.html" style="color:white;">${loginUser.mobile!}</a>　|　<a href="/logout.html" style="color:white;">退出</a>
+		<#else>
+			<a href="/to_login.html" style="color:white;">登录</a>
+		</#if>
+	</div>
+	<div class="clear"></div>
+	
+	<div id="errorTip" style="margin:0 auto;text-align:center;border:1px solid white;padding:5px;width:500px;height:20px;display:none;">
+		<div id="errorMsg" style="float:left;"></div><div style="float:right;"><a href="javascript:void(0)" onclick="closeErrorTip()" style="color:white;">X</a></div>
+	</div>
+	<div class="clear"></div>
+	
+	<#if modules??>
+	<div id="bars" style="padding:10px;text-align:center;display:none;">
+		<#if modules.indexOf('crm')!=-1><a href="/admincrm/accountdetail.html" class="bar" <#if PageBar?? && PageBar='crm'>style="background: #E8000C;"</#if>>客服系统</a></#if>
+		<#if modules.indexOf('cms')!=-1><a href="/admincms/selectbanner.html" class="bar" <#if PageBar?? && PageBar='cms'>style="background: #E8000C;"</#if>>运营系统</a></#if>
+		<#if modules.indexOf('pbs')!=-1><a href="/adminpbs/selfitemlist.html" class="bar" <#if PageBar?? && PageBar='pbs'>style="background: #E8000C;"</#if>>发标系统</a></#if>
+		<#if modules.indexOf('fcs')!=-1><a href="/adminfcs/checkreport.html" class="bar" <#if PageBar?? && PageBar='fcs'>style="background: #E8000C;"</#if>>财务系统</a></#if>
+		<#if modules.indexOf('project')!=-1><a href="/adminproject/projectlist.html" class="bar" <#if PageBar?? && PageBar='project'>style="background: #E8000C;"</#if>>项目管理</a></#if>
+	</div>
+	</#if>
+</div>
+
+<script>
+	$('#header').bind('mouseover',function(){
+		$('#bars').show();
+	}).bind('mouseout',function(){
+		$('#bars').hide();
+	});
+</script>
+
+<br>

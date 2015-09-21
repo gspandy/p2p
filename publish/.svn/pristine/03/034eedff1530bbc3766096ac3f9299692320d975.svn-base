@@ -1,0 +1,24 @@
+#crm
+02=adminrequirement,adminfeedback,adminchangebankcard,adminqa,scoredetail
+05=fabiao
+11=adminfeedback,dossaccounttrade,adminsite
+12=adminfeedback,fcstocashdetail,fcsaccounttrade,fcsbonuscheck,fcsdayreport,fcsuserbonuscheck,fcsydactivityday,fcsyxactivityday,balance,accountscore,dsforopeate,dossaccounttrade
+#site
+03=adminsite,adminholiday,adminsmsbatchsend,fabiao,adminyimeisms
+#co
+09=adminrequirement,adminsite,adminholiday,adminfeedback,fcstocashdetail,fcsaccounttrade,fcsbonuscheck,fcsdayreport,adminchangebankcard,adminsmsbatchsend,adminqa,fcsuserbonuscheck,fcsydactivityday,adminddbrecord,adminpushmessage,scoredetail,scorerule,accountscore,dossaccounttrade,scorecost,fcsyxactivityday,changepage,rewardforgift,adminyimeisms
+
+
+#bl
+06=fcstocashdetail,fcsaccounttrade,fcsbonuscheck,fcsdayreport,fcsuserbonuscheck,fcsydactivityday,fcsyxactivityday,balance,adminfeedback,accountscore
+07=fcstocashdetail,fcsaccounttrade,fcsbonuscheck,fcsdayreport,fcsuserbonuscheck,fcsydactivityday,fcsyxactivityday,balance,adminfeedback,accountscore,dsforfinance
+08=fcstocashdetail,fcsaccounttrade,fcsbonuscheck,fcsdayreport,fcsuserbonuscheck,fcsydactivityday,fcsyxactivityday,balance,adminfeedback,accountscore
+13=fcstocashdetail,fcsaccounttrade,fcsbonuscheck,fcsdayreport,fcsuserbonuscheck,fcsydactivityday,fcsyxactivityday,balance,adminfeedback,accountscore
+
+#publish system manager
+97=adminrequirement,adminapi,admindb,adminsmstemplate,adminholiday,adminversion,adminconfig,adminfeedback,adminsmsbatchsend,adminsystemlog,adminqa,adminchangebankcard,adminpushmessage,scoredetail,scorerule,adminsunshine,scorecost,accountscore,fcstocashdetail,fcsaccounttrade,fcsbonuscheck,fcsdayreport,fcsuserbonuscheck,fcsydactivityday,fcsyxactivityday,balance,changepage,rewardforgift,dsdata,admintimer,dsforopeate,dsforfinance,fcs,fabiao,adminyimeisms
+
+#publish system test
+98=adminrequirement,adminfeedback,adminsystemlog,adminversion,scorerule
+#publish system deve
+99=adminrequirement,adminapi,admindb,adminfeedback,adminsystemlog,adminchangebankcard,adminpushmessage,scorerule,accountscore,scorecost,adminsite

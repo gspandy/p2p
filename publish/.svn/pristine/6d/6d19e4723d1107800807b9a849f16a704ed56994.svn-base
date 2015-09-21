@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<include file="struts-default.xml" />
+
+	<constant name="struts.action.extension" value="html" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.objectFactory" value="spring" />
+
+	<package name="web" extends="struts-default">
+		<interceptors>
+			<interceptor name="paramsInterceptor" class="com.platform.interceptor.ParamsInterceptor" />
+			<interceptor name="loginInterceptor" class="com.publish.interceptor.LoginInterceptor" />
+			<interceptor name="departmentInterceptor" class="com.publish.interceptor.DepartmentInterceptor" />
+			<interceptor-stack name="interceptors">
+				<interceptor-ref name="paramsInterceptor" />
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="departmentInterceptor" />
+				<interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>
+					<param name="exception.logLevel">error</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="interceptors" />
+		
+		<global-results>
+			<result name="layout_admin" type="freemarker">/base/layout_admin.ftl</result>
+		</global-results>
+		
+	</package>
+
+</struts>

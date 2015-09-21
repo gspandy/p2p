@@ -1,0 +1,85 @@
+<div style="">
+	<#if PageMenu?? && PageMenu='accountdetail'>
+	<form id="search_form" action="/admincrm/accountdetail.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+	</#if>
+	<#if PageMenu?? && PageMenu='accountselfitemlist'>
+		<form id="search_form" action="/admincrm/accountselfitemlist.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+	</#if>
+	<#if PageMenu?? && PageMenu='tradeSearch'>
+		<form id="search_form" action="/admincrm/tradeSearch.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+	</#if>
+	<#if PageMenu?? && PageMenu='cashbackSearch'>
+		<form id="search_form" action="/admincrm/cashbackSearch.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+	</#if>
+	<#if PageMenu?? && PageMenu='bonusSearch'>
+		<form id="search_form" action="/admincrm/bonusSearch.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+	</#if>
+	<#if PageMenu?? && PageMenu='scoreSearch'>
+		<form id="search_form" action="/admincrm/scoreSearch.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+	</#if>
+	<#if PageMenu?? && PageMenu='taskSearch'>
+		<form id="search_form" action="/admincrm/taskSearch.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+	</#if>
+	<#if PageMenu?? && PageMenu='feedbackSearch'>
+		<form id="search_form" action="/admincrm/feedbackSearch.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+	</#if>
+	<#if PageMenu?? && PageMenu='messageSearch'>
+		<form id="search_form" action="/admincrm/messageSearch.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+	</#if>
+	<#if PageMenu?? && PageMenu='smsSearch'>
+		<form id="search_form" action="/admincrm/smsSearch.html" method="post">
+		<input type="hidden" name="token">
+		<input name="mobile" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+	</form>
+	<br>
+	</#if>
+</div>
+
+<div class="admin-left-menu">
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/accountdetail.html" <#if PageMenu?? && PageMenu='accountdetail'>class="menu_selected"</#if>>用户信息</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/accountselfitemlist.html" <#if PageMenu?? && PageMenu='accountselfitemlist'>class="menu_selected"</#if>>投资列表</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/tradeSearch.html" <#if PageMenu?? && PageMenu='tradeSearch'>class="menu_selected"</#if>>交易查询</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/cashbackSearch.html" <#if PageMenu?? && PageMenu='cashbackSearch'>class="menu_selected"</#if>>回款查询</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/bonusSearch.html" <#if PageMenu?? && PageMenu='bonusSearch'>class="menu_selected"</#if>>红包查询</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/scoreSearch.html" <#if PageMenu?? && PageMenu='scoreSearch'>class="menu_selected"</#if>>积分查询</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/taskSearch.html" <#if PageMenu?? && PageMenu='taskSearch'>class="menu_selected"</#if>>任务查询</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/feedbackSearch.html" <#if PageMenu?? && PageMenu='feedbackSearch'>class="menu_selected"</#if>>反馈查询</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/messageSearch.html" <#if PageMenu?? && PageMenu='messageSearch'>class="menu_selected"</#if>>消息查询</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/smsSearch.html" <#if PageMenu?? && PageMenu='smsSearch'>class="menu_selected"</#if>>短信查询</a><br></#if>
+</div>

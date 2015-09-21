@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="../style/style.css">
+<input type="hidden"  id="selfitemid" name="selfitemid" value="${(selfitemid)!}">
+<input type="hidden"  id="perCount" name="perCount" value="${(perCount)!}">
+<input type="hidden"  id="pageNo" name="pageNo" value="${(pageNo)!}">
+
+    <section class="main">
+        <ul id="bought-box"></ul>
+    </section>
+<script>
+    var selfitemid=$("#selfitemid").val();
+    var perCount = $("#perCount").val();
+    var pageNo = $("#pageNo").val();
+    //请求数据块并直接加载
+    $(function(){
+        requestData(pageNo);
+    });
+
+    window.onscroll = function(){
+        if(CheckScrollSlide('bought-box','bought-li')){
+            requestData(++pageNo);
+        }
+    };
+    
+
+    function requestData(pageNo){
+       $.ajax({
+					type: "post",
+					url: "accountlistpage.html",
+					data:{"selfitemid":selfitemid,"perCount":perCount,"pageNo":pageNo},
+					dataType: 'json',
+				    success : function(data) {
+                          loadData(data);
+				    }
+				  
+	    		});
+    
+    
+    }
+    function loadData(data){
+        //将数据块渲染到页面中
+        for(var i = 0;i<data.length;i++){
+            var s = '<li class="bought-li" id="bought-box">';
+            s +='       <div class="top-left">'+data[i].name+'</div>';
+            s +='       <div class="top-right"><span>'+data[i].amount+'</span>元</div>';
+            s +='       <div class="bottom-left">';
+            s +='           <img src="images/clock.png" alt=""/>';
+            s +='           <span>'+data[i].createtime+'</span>';
+            s +='       </div>';
+            s +='       <div class="bottom-right">可获收益<span>'+data[i].income+'</span>元</div>';
+            s +='   </li>';
+            $('#bought-box').append(s);
+        }
+    }
+</script>
+
+

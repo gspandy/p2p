@@ -1,0 +1,17 @@
+system.path=
+web.url=http://192.168.10.199:8081
+image.url=http://192.168.10.199:88
+
+task.enable=false
+cache.enable=false
+params.encrypt=false
+log.request.url.enable=false
+verify.app.enable=false
+
+#mysql.db.url=jdbc\:mysql\://192.168.10.199\:3306/caishulicai?useUnicode\=true&characterEncoding\=utf8
+#mysql.db.username=mysql
+#mysql.db.password=39085d900963d4eb55ca66205ea156e1
+
+mysql.db.url=jdbc\:mysql\://rdsd8gk1jxxi0160u2vo.mysql.rds.aliyuncs.com\:3306/caishulicai?useUnicode\=true&characterEncoding\=utf8
+mysql.db.username=cslc
+mysql.db.password=39085d900963d4eb55ca66205ea156e1

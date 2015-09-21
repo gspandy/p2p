@@ -1,0 +1,141 @@
+package com.publish;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
+import com.cslc.dao.account.Account;
+import com.platform.util.MD5Util;
+import com.platform.util.StringUtil;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+public class CookieUtil {
+
+    private static Logger      log             = Logger.getLogger(CookieUtil.class);
+
+    public static final int    COOKIE_TIME     = 365 * 24 * 60 * 60;
+    public static final String COOKIE_ID   = "cookie_id";
+    public static final String COOKIE_MOBILE = "cookie_mobile";
+
+    public static void setUserCookie(Account user, HttpServletResponse response) {
+        setCookie(response, MD5Util.encrypt(COOKIE_ID), addBase64(String.valueOf(user.getId())), "/", null);
+        setCookie(response, MD5Util.encrypt(COOKIE_MOBILE), addBase64(user.getMobile()), "/", COOKIE_TIME);
+    }
+
+    public static void delUserCookie(HttpServletRequest request, HttpServletResponse response) {
+    	Account user = getLoginUser(request);
+        setCookie(response, MD5Util.encrypt(COOKIE_ID), addBase64(String.valueOf(user.getId())), "/", 0);
+        setCookie(response, MD5Util.encrypt(COOKIE_MOBILE), addBase64(user.getMobile()), "/", 0);
+    }
+
+    public static boolean isLogin(HttpServletRequest request) {
+    	Account u = getLoginUser(request);
+        if (u != null && u.getId() != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public static Account getLoginUser(HttpServletRequest request) {
+    	Account u = getUserCookie(request);
+        if (u == null || u.getId() == null) {
+            return null;
+        }
+        return u;
+    }
+
+    public static Account getUserCookie(HttpServletRequest request) {
+        if (request == null) {
+            return null;
+        }
+
+        Cookie[] cookie = request.getCookies();
+        String userid = null;
+        String username = null;
+
+        Account user = new Account();
+        if (cookie != null && cookie.length > 0) {
+            for (int i = 0; i < cookie.length; i++) {
+                if (MD5Util.encrypt(COOKIE_ID).equals(cookie[i].getName())) {
+                    userid = CookieUtil.delBase64(cookie[i].getValue());
+                    continue;
+                } else if (MD5Util.encrypt(COOKIE_MOBILE).equals(cookie[i].getName())) {
+                    username = CookieUtil.delBase64(cookie[i].getValue());
+                    continue;
+                }
+            }
+            if (StringUtil.isNotBlank(userid) && !"null".equals(userid)) {
+                user.setId(Long.parseLong(userid));
+            }
+            user.setRealname(username);
+        }
+        return user;
+    }
+
+    public static String getCookie(HttpServletRequest request, String key) {
+        if (request != null && StringUtil.isNotBlank(key)) {
+            Cookie[] cookie = request.getCookies();
+            if (cookie != null && cookie.length > 0) {
+                for (int i = 0; i < cookie.length; i++) {
+                    if (key.equals(cookie[i].getName())) {
+                        return cookie[i].getValue();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void delCookie(HttpServletResponse response, String key) {
+        setCookie(response, key, null, "/", 0);
+    }
+
+    private static void setCookie(HttpServletResponse response, String cKey, String cVal, String path, Integer time) {
+        Cookie cookie = new Cookie(cKey, cVal);
+        cookie.setPath(path);
+        if (time != null) {
+            cookie.setMaxAge(time);
+        }
+        response.addCookie(cookie);
+    }
+
+    private static String addBase64(String val) {
+        byte[] encodedBytesUser = val.getBytes();
+        BASE64Encoder base64encoderUser = new BASE64Encoder();
+        val = base64encoderUser.encode(encodedBytesUser);
+        int flag = val.indexOf("=");
+        if (flag > 0) {
+            val = val.substring(0, flag);
+        }
+        return val;
+    }
+
+    private static String delBase64(String val) {
+        val = padString(val);
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            byte[] decodedBytesUser = decoder.decodeBuffer(val);
+            val = new String(decodedBytesUser);
+        } catch (Exception e) {
+            log.error(e);
+        }
+        return val;
+    }
+
+    private static String padString(String value) {
+        int mod = value.length() % 4;
+        if (mod <= 0) {
+            return value;
+        }
+        int numEqs = 4 - mod;
+        for (int i = 0; i < numEqs; i++) {
+            value += "=";
+        }
+        return value;
+    }
+
+}

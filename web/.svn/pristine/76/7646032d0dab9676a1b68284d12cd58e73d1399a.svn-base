@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="../style/style.css">
+<section class="investment-main">
+<input type="hidden" id="login" name="login" value="${login!}"  >
+<input type="hidden" id="code" name="code" value="${code!}"  >
+<input type="hidden" id="perCount" name="perCount" value="${perCount!}"  >
+<input type="hidden" id="pageNo" name="pageNo" value="${pageNo!}"  >
+    <div>
+        <div class="investment-up">
+            <ul>
+                <li class="investment-li">
+                    <h3 class="invest-h3">投资本金</h3>
+                    <h4><span class="investment-sp">${amount!}</span>元</h4>
+                </li>
+                <li class="investment-li1">
+                    <h3 class="invest-h3">可获收益</h3>
+                    <h4><span class="investment-sp">${totalincome!}</span>元</h4>
+                </li>
+                <li class="investment-li">
+                    <h3 class="invest-h3">红包返现</h3>
+                    <h4><span class="investment-sp">${bonusasset!}</span>元</h4>
+                </li>
+            </ul>
+        </div>
+        <div class="calendar">
+        <ul>
+            <#if list??>
+              <#list list as l>
+                <#if l=date>
+                <li class="active"><a class="invest-calendar-a" href="/selfitemdate.html?code=${code!}&login=${login!}&date=${l!}"><span>${l}</span></a></li>
+               <#else>
+               <li><a class="invest-calendar-a" href="/selfitemdate.html?code=${code!}&login=${login!}&date=${l!}"><span>${l}</span></a></li>
+               </#if>
+               </#list>
+            </#if>  
+            </ul>  
+        </div>
+        
+      <#if records??>
+           <#list records as r>
+        <div class="invest-main">
+            <div class="invest-item1">
+                <div><h5 class="invest-h5">${r.name!}</h5></div>
+                <p class="invest-p1">&nbsp;本金<span class="invest-letter-rb">${r.amount!}</span>元</p>
+            </div>
+            <div class="invest-item2">
+            <div class="invest-count"><img class="invest-back-circle" src="images/count.png" /><div class="invest-letter-y1"><span>${r.days!}</span>天</div></div>
+                <p class="invest-p">收益<span class="invest-letter-y">${r.income!}</span>元</p>
+            </div>
+            <div class="invest-item3">
+                <div class="invest-position"><span class="invest-position"><#if r.status?? & r.status=1>募集中</#if><#if r.status?? & r.status=2>募集完成</#if><#if r.status?? & r.status=3>计息中</#if><#if r.status?? & r.status=4>已还款</#if></span ><a class="invest-a" href="#"><img class="invest-img" src="images/yright.png" alt="" /></a></div>
+                <p class="invest-p">红包<span class="invest-letter-rs">${r.bonus!}</span>元</p>
+            </div>
+        </div>
+        </#list>
+      </#if> 
+    </div>
+</section>

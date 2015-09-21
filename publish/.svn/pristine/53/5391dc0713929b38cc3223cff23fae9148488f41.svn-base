@@ -1,0 +1,23 @@
+<style>
+	.item{padding:15px;border:1px solid #E8000C;width:200px;}
+</style>
+
+<div style="text-align:center;">
+<#if loginUser.groupno=='09'>
+	<a href="/adminsite/team_select.html"><div class="item">官网后台</div></a><br>
+	<a href="/adminfeedback/crm_select.html"><div class="item">客服系统</div></a><br>
+	<a href="/fcstocashdetail/select.html"><div class="item">财务统计</div></a><br>
+	<a href="/adminchangebankcard/select.html"><div class="item">换卡审核</div></a><br>
+	<a href="/adminsmsbatchsend/add.html"><div class="item">发送短信入口</div></a><br>
+	<div class="item"><a href="/adminqa/select.html" <#if PageMenu?? && PageMenu='qa'>class="menu_selected"</#if>>问答系统</a></div><br>
+	<div class="item"><a href="/adminqa/knowledge.html" target="_blank">客服知识库</a></div><br>
+<#elseif loginUser.groupno=='02'>
+	<a href="/adminfeedback/crm_select.html"><div class="item">客服系统</div></a><br>
+	<a href="/adminchangebankcard/select.html"><div class="item">换卡审核</div></a><br>
+	<div class="item"><a href="/adminqa/select.html" <#if PageMenu?? && PageMenu='qa'>class="menu_selected"</#if>>问答系统</a></div><br>
+	<div class="item"><a href="/adminqa/knowledge.html" target="_blank">客服知识库</a></div><br>
+<#else>
+	<a href="/adminsite/team_select.html"><div class="item">官网后台</div></a><br>
+	<a href="/adminsmsbatchsend/add.html"><div class="item">发送短信入口</div></a><br>
+</#if>
+</div>

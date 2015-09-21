@@ -1,0 +1,65 @@
+package com.server.action;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.cslc.dao.accountasset.Accountasset;
+import com.cslc.dao.accountasset.AccountassetDao;
+import com.cslc.dao.accountselfitem.Accountselfitem;
+import com.cslc.dao.accountselfitem.AccountselfitemDao;
+import com.platform.base.BaseAction;
+import com.platform.util.PageUtil;
+
+@ParentPackage("app")
+@Namespace("/")
+public class TestAction extends BaseAction {
+
+	@Resource
+	private AccountassetDao accountassetDao;
+	
+	@Resource
+	private AccountselfitemDao accountselfitemDao;
+
+	@Action("test")
+	public void test() {
+		Map<String, Object> accountassetMap = new HashMap<String, Object>();
+		accountassetMap.put("selfitemrestincomeGt", 0D);
+		long accountCount = accountassetDao.selectCount(accountassetMap);
+		int page = 1;
+		while(true){
+			PageUtil.getMap(accountassetMap, String.valueOf(page ++), accountCount, "1000");
+			List<Accountasset> assetList = accountassetDao.select(accountassetMap);
+			
+			for(Accountasset asset : assetList){
+				Map<String, Object> accountselfitemMap = new HashMap<String, Object>();
+				accountselfitemMap.put("accountid", asset.getAccountid());
+				accountselfitemMap.put("status", Accountselfitem.STATUS_INCOME);
+				accountselfitemMap.put("field", "dayincome");
+				double dayincomeSum = accountselfitemDao.selectSum(accountselfitemMap);
+				
+				Accountasset a = new Accountasset();
+				a.setAccountid(asset.getAccountid());
+				a.setSelfitemtodayincome(dayincomeSum);
+				// 其他字段
+				accountassetDao.update(a);
+			}
+			
+			if(assetList.isEmpty()){
+				break;
+			}
+		}
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("result", "success");
+		print(resultMap);
+	}
+
+}
+

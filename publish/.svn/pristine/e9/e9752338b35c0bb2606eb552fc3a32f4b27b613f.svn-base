@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+	<typeAlias alias="Project" type="com.publish.dao.project.Project" />
+
+	<sql id="Project.RESULT">
+		progress,endtime,content,createtime,id,title,starttime,partners,leader
+	</sql>
+
+	<sql id="Project.WHERE">
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="progress"> progress = #progress:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="endtime"> endtime = #endtime:DATETIME# </isNotEmpty>
+			<isNotEmpty prepend="and" property="content"> content = #content:VARCHAR# </isNotEmpty>
+			<isNotEmpty prepend="and" property="createtime"> createtime = #createtime:DATETIME# </isNotEmpty>
+			<isNotEmpty prepend="and" property="id"> id = #id:BIGINT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="title"> title = #title:VARCHAR# </isNotEmpty>
+			<isNotEmpty prepend="and" property="starttime"> starttime = #starttime:DATETIME# </isNotEmpty>
+			<isNotEmpty prepend="and" property="partners"> partners = #partners:VARCHAR# </isNotEmpty>
+			<isNotEmpty prepend="and" property="leader"> leader = #leader:VARCHAR# </isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<select id="Project.selectById" parameterClass="java.lang.Long" resultClass="Project">
+		select <include refid="Project.RESULT" /> from project where id = #id:BIGINT#
+	</select>
+
+	<insert id="Project.insert" parameterClass="Project">
+		insert into project
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="progress"> progress </isNotNull>
+			<isNotNull prepend="," property="endtime"> endtime </isNotNull>
+			<isNotNull prepend="," property="content"> content </isNotNull>
+			<isNotNull prepend="," property="createtime"> createtime </isNotNull>
+			<isNotNull prepend="," property="title"> title </isNotNull>
+			<isNotNull prepend="," property="starttime"> starttime </isNotNull>
+			<isNotNull prepend="," property="partners"> partners </isNotNull>
+			<isNotNull prepend="," property="leader"> leader </isNotNull>
+			)
+		</dynamic>
+		values
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="progress"> #progress:INT# </isNotNull>
+			<isNotNull prepend="," property="endtime"> #endtime:DATETIME# </isNotNull>
+			<isNotNull prepend="," property="content"> #content:VARCHAR# </isNotNull>
+			<isNotNull prepend="," property="createtime"> #createtime:DATETIME# </isNotNull>
+			<isNotNull prepend="," property="title"> #title:VARCHAR# </isNotNull>
+			<isNotNull prepend="," property="starttime"> #starttime:DATETIME# </isNotNull>
+			<isNotNull prepend="," property="partners"> #partners:VARCHAR# </isNotNull>
+			<isNotNull prepend="," property="leader"> #leader:VARCHAR# </isNotNull>
+			)
+		</dynamic>
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+			<![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+		</selectKey>
+	</insert>
+
+	<delete id="Project.delete" parameterClass="java.lang.Long">
+		delete from project where id = #id:BIGINT#
+	</delete>
+
+	<update id="Project.update" parameterClass="Project">
+		update project
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="progress"> progress = #progress:INT# </isNotNull>
+			<isNotNull prepend="," property="endtime"> endtime = #endtime:DATETIME# </isNotNull>
+			<isNotNull prepend="," property="content"> content = #content:VARCHAR# </isNotNull>
+			<isNotNull prepend="," property="title"> title = #title:VARCHAR# </isNotNull>
+			<isNotNull prepend="," property="starttime"> starttime = #starttime:DATETIME# </isNotNull>
+			<isNotNull prepend="," property="partners"> partners = #partners:VARCHAR# </isNotNull>
+			<isNotNull prepend="," property="leader"> leader = #leader:VARCHAR# </isNotNull>
+		</dynamic>
+		WHERE id = #id:BIGINT#
+	</update>
+
+	<select id="Project.select" parameterClass="java.util.Map" resultClass="Project">
+		select <include refid="Project.RESULT" /> from project <include refid="Project.WHERE" />
+		<isNotNull prepend="order" property="orderBy"> by $orderBy$ </isNotNull>
+		<isNotNull prepend="limit" property="size"> #first#,#size# </isNotNull>
+	</select>
+
+	<select id="Project.selectCount" parameterClass="java.util.Map" resultClass="java.lang.Long">
+		select count(*) from project <include refid="Project.WHERE" />
+	</select>
+
+	<select id="Project.selectSum" parameterClass="java.util.Map" resultClass="java.lang.Double">
+		select sum($field$) as sumField from project <include refid="Project.WHERE" />
+	</select>
+
+</sqlMap>

@@ -1,0 +1,23 @@
+<input name="mobile" onblur="search(this.value)" value="${(account.mobile)!}" style="width:988px;border:1px solid #FEAE11;background:#FAFFBD;padding:5px 10px 5px 10px;font-size:16px;">
+<br><br>
+
+<script>
+	function search(mobile){
+		window.location = '/admincrm/accountdetail.html?mobile=' + mobile;
+	}
+</script>
+
+<#if account?? && account.id??>
+<div class="admin-left-menu">
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/accountdetail.html?mobile=${(account.mobile)!}" <#if PageMenu?? && PageMenu='accountdetail'>class="menu_selected"</#if>>用户信息</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/accountselfitem.html?accountid=${(account.id)!}" <#if PageMenu?? && PageMenu='accountselfitem'>class="menu_selected"</#if>>投资记录</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/trade.html?accountid=${(account.id)!}" <#if PageMenu?? && PageMenu='trade'>class="menu_selected"</#if>>交易记录</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/cashback.html?accountid=${(account.id)!}" <#if PageMenu?? && PageMenu='cashback'>class="menu_selected"</#if>>回款记录</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/bonus.html?accountid=${(account.id)!}" <#if PageMenu?? && PageMenu='bonus'>class="menu_selected"</#if>>红包记录</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/score.html?accountid=${(account.id)!}" <#if PageMenu?? && PageMenu='score'>class="menu_selected"</#if>>积分记录</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/tasklog.html?accountid=${(account.id)!}" <#if PageMenu?? && PageMenu='tasklog'>class="menu_selected"</#if>>任务记录</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/feedback.html?accountid=${(account.id)!}" <#if PageMenu?? && PageMenu='feedback'>class="menu_selected"</#if>>反馈记录</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/message.html?accountid=${(account.id)!}" <#if PageMenu?? && PageMenu='message'>class="menu_selected"</#if>>消息记录</a><br></#if>
+	<#if modules.indexOf('admincrm')!=-1 ><a href="/admincrm/sms.html?accountid=${(account.id)!}" <#if PageMenu?? && PageMenu='sms'>class="menu_selected"</#if>>短信记录</a><br></#if>
+</div>
+</#if>

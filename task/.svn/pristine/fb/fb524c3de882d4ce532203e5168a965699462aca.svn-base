@@ -1,0 +1,32 @@
+package com.task.action;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.platform.base.BaseAction;
+import com.task.table.ProcedureTask;
+
+@ParentPackage("app")
+@Namespace("/")
+public class TestAction extends BaseAction {
+
+	@Resource
+	private ProcedureTask procedureTask;
+	
+	@Action("test")
+	public void test() {
+		procedureTask.execute();
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("result", "success");
+		print(resultMap);
+	}
+
+}
+

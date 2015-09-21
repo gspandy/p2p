@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+	<typeAlias alias="Analysedayaccount" type="com.cslc.dao.analysedayaccount.Analysedayaccount" />
+
+	<sql id="Analysedayaccount.RESULT">
+		createtime,bonusasset,selfitemtodayincome,selfitemtotalincome,scoreasset,selfitemasset,accountid
+	</sql>
+
+	<sql id="Analysedayaccount.WHERE">
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="createtime"> createtime = #createtime:DATETIME# </isNotEmpty>
+			<isNotEmpty prepend="and" property="bonusasset"> bonusasset = #bonusasset:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemtodayincome"> selfitemtodayincome = #selfitemtodayincome:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemtotalincome"> selfitemtotalincome = #selfitemtotalincome:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="scoreasset"> scoreasset = #scoreasset:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemasset"> selfitemasset = #selfitemasset:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="accountid"> accountid = #accountid:BIGINT# </isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<insert id="Analysedayaccount.insert" parameterClass="Analysedayaccount">
+		insert into analysedayaccount
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="createtime"> createtime </isNotNull>
+			<isNotNull prepend="," property="bonusasset"> bonusasset </isNotNull>
+			<isNotNull prepend="," property="selfitemtodayincome"> selfitemtodayincome </isNotNull>
+			<isNotNull prepend="," property="selfitemtotalincome"> selfitemtotalincome </isNotNull>
+			<isNotNull prepend="," property="scoreasset"> scoreasset </isNotNull>
+			<isNotNull prepend="," property="selfitemasset"> selfitemasset </isNotNull>
+			<isNotNull prepend="," property="accountid"> accountid </isNotNull>
+			)
+		</dynamic>
+		values
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="createtime"> #createtime:DATETIME# </isNotNull>
+			<isNotNull prepend="," property="bonusasset"> #bonusasset:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemtodayincome"> #selfitemtodayincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemtotalincome"> #selfitemtotalincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="scoreasset"> #scoreasset:INT# </isNotNull>
+			<isNotNull prepend="," property="selfitemasset"> #selfitemasset:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="accountid"> #accountid:BIGINT# </isNotNull>
+			)
+		</dynamic>
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+			<![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+		</selectKey>
+	</insert>
+
+	<delete id="Analysedayaccount.delete" parameterClass="java.lang.Long">
+		delete from analysedayaccount where id = #id:BIGINT#
+	</delete>
+
+	<update id="Analysedayaccount.update" parameterClass="Analysedayaccount">
+		update analysedayaccount
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="bonusasset"> bonusasset = #bonusasset:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemtodayincome"> selfitemtodayincome = #selfitemtodayincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemtotalincome"> selfitemtotalincome = #selfitemtotalincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="scoreasset"> scoreasset = #scoreasset:INT# </isNotNull>
+			<isNotNull prepend="," property="selfitemasset"> selfitemasset = #selfitemasset:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="accountid"> accountid = #accountid:BIGINT# </isNotNull>
+		</dynamic>
+		WHERE id = #id:BIGINT#
+	</update>
+
+	<select id="Analysedayaccount.select" parameterClass="java.util.Map" resultClass="Analysedayaccount">
+		select <include refid="Analysedayaccount.RESULT" /> from analysedayaccount <include refid="Analysedayaccount.WHERE" />
+		<isNotNull prepend="order" property="orderBy"> by $orderBy$ </isNotNull>
+		<isNotNull prepend="limit" property="size"> #first#,#size# </isNotNull>
+	</select>
+
+	<select id="Analysedayaccount.selectCount" parameterClass="java.util.Map" resultClass="java.lang.Long">
+		select count(*) from analysedayaccount <include refid="Analysedayaccount.WHERE" />
+	</select>
+
+	<select id="Analysedayaccount.selectSum" parameterClass="java.util.Map" resultClass="java.lang.Double">
+		select sum($field$) from analysedayaccount <include refid="Analysedayaccount.WHERE" />
+	</select>
+
+</sqlMap>

@@ -1,0 +1,188 @@
+package com.server.action;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.cslc.dao.account.Account;
+import com.cslc.dao.account.AccountDao;
+import com.cslc.dao.accountbankcard.Accountbankcard;
+import com.cslc.dao.accountbankcard.AccountbankcardDao;
+import com.cslc.dao.bonus.Bonus;
+import com.cslc.dao.selfitem.Selfitem;
+import com.cslc.dao.selfitem.SelfitemDao;
+import com.cslc.dao.supportbank.SupportbankDao;
+import com.cslc.dao.trade.Trade;
+import com.cslc.dao.trade.TradeDao;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+import com.platform.util.StringUtil;
+import com.server.service.PayService;
+import com.server.service.ResultService;
+
+@ParentPackage("app")
+@Namespace("/")
+public class PayAction extends BaseAction{
+	@Resource
+	private AccountDao accountDao;
+	
+	@Resource
+	private SelfitemDao selfitemDao;
+	
+	@Resource
+	private AccountbankcardDao accountbankcardDao;	
+	
+	@Resource
+	private SupportbankDao supportbankDao;
+	
+	@Resource
+	private TradeDao tradeDao;
+	
+	@Resource
+	private PayService payService;
+	
+	@Resource
+	private ResultService resultService;
+	
+	    // 支付
+		@Action("114")
+		public void paypage() {
+			Long accountid = Long.parseLong(getParameter("accountid"));
+			Long selfitemid = Long.parseLong(getParameter("selfitemid"));
+			Long bankcardid = Long.parseLong(getParameter("bankcardid"));
+			String bonusid = getParameter("bonusid");
+			
+			String amount = getParameter("amount");
+			
+			String errorMsg = "提交失败，请稍后再试";
+			Account account = accountDao.selectById(accountid);
+			Selfitem item = selfitemDao.selectById(selfitemid);
+			Accountbankcard card = accountbankcardDao.selectById(bankcardid);
+			Map<String, Object> result = new HashMap<String, Object>();
+
+			  if (item.getStatus() == Selfitem.STATUS_SALE && new Date().getTime() < item.getStarttime().getTime()) {
+	                result.put("returnCode", 1);
+	                result.put("returnMsg", "产品还未开售");
+	                print(result);
+	                return;
+	            }
+			
+			
+			double freezeamount = (item.getStatus() == Selfitem.STATUS_SELLOUT || item.getStatus() == Selfitem.STATUS_INCOME) ? 0 : item.getFreezeamount();
+	           if (item.getRestamount() + freezeamount <= 0) {
+	               result.put("returnCode", 1);
+	               result.put("returnMsg", "该产品已售完");
+	               print(result);
+	               return;
+	           }
+	           
+	           if (StringUtil.isNotBlank(amount)) {
+	               if (!StringUtil.isNumeric(amount)) {
+	                   result.put("returnCode", 1);
+	                   result.put("returnMsg", "输入金额有误，请重新输入");
+	                   print(result);
+	                   return;
+	               }
+	           }
+
+	           if ((account.getTradecount() > 0) && (item.getActivitytitle().equals("新手产品"))) {
+	               result.put("returnCode", 1);
+	               result.put("returnMsg", "不允许申购新手产品");
+	               print(result);
+	               return;
+	           }
+	           
+
+	           Trade trade = payService.getNewTrade(amount, selfitemid, accountid,bankcardid, account.getMobile());
+	           
+	           double totalAmount = trade.getAmount();// 总购买金额，包含银行卡扣款、奖励、账户余额
+               totalAmount = Double.parseDouble(StringUtil.getFormatNumber(totalAmount, "0.00"));
+	           
+	           double fee = payService.getFee(totalAmount);
+	           
+	           
+	           String platform = StringUtil.getUserAgent(request, "platform");
+	           if (StringUtil.isNotBlank(platform)) {
+	        	   trade.setPlatform(Byte.parseByte(platform));
+	        	   trade.setVersion(StringUtil.getUserAgent(request, "appversion"));
+	        	   trade.setTerminalid(StringUtil.getUserAgent(request, "terminalid"));
+	        	   trade.setPhone(StringUtil.getUserAgent(request, "phone"));
+	        	   
+	           }
+	           trade.setIp(StringUtil.getIp(request));
+	           trade.setFee(fee);
+	           trade.setCreatetime(new Date());
+		       trade.setStatus(Trade.STATUS_NOT_PAY);
+	           
+		       Long insertTradeid = payService.createTrade(trade);
+		       if (insertTradeid == null) {
+		    	   result.put("returnCode", 1);
+		    	   result.put("returnMsg", "系统繁忙，请稍后再试");
+		    	   print(result);
+		    	   return;
+		       }
+	           if(card.getStatus() == Accountbankcard.STATUS_NOT_VERIFIED){
+	        	   trade.setOrderno(SystemConstant.ORDER_PREFIX_JQ + trade.getId());
+	        	   
+	           }else if(card.getStatus() == Accountbankcard.STATUS_VERIFIED){
+	        	   trade.setOrderno(SystemConstant.ORDER_PREFIX_JQ + trade.getId());
+	           }else{
+	        	   result.put("returnCode", 1);
+                   result.put("returnMsg", "不支持该银行卡");
+                   print(result);
+                   return;
+	        	   
+	           }
+	           Trade td = new Trade();
+	            td.setId(trade.getId());
+	            td.setOrderno(trade.getOrderno());// 支付订单
+	            tradeDao.update(td);
+	            
+	            
+	            
+	            boolean selfitemFreeze = false;
+	       
+	                //冻结产品份数
+	                if ("success".equals(payService.freezeSelfitemAmount(trade))) {
+	                        selfitemFreeze = true;
+	                }
+	                Random r = new Random();
+	                int a=r.nextInt(2);
+	                if(a==1){
+	                	resultService.updateSuccessRecords(trade, account.getRealname(), account.getIdcardno(),bonusid);
+	                	result.put("returnCode", 0);
+	                	result.put("returnMsg", "success");
+	                	print(result);
+	                	return;
+
+	                	
+	                }else{
+	                	
+	                	resultService.updateFailureRecords(trade,errorMsg, selfitemFreeze);
+	                	
+	                	result.put("returnCode", 1);
+	                	result.put("returnMsg",errorMsg);
+	                	print(result);
+	                	return;
+	                	
+	                }
+	            
+	            
+	            
+		}
+		
+		
+		
+	           
+		
+	
+}

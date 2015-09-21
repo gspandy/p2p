@@ -1,0 +1,51 @@
+<div id="header" style="background:#E8000C;color:white;padding:10px;">
+	<div style="float:left;width:200px;font-weight:bold;font-size:20px;">点点搜财</div>
+	<div style="float:right;width:200px;text-align:right;">
+		<#if loginUser??>
+			${loginUser.username!}　|　<a href="/user/to_password.html" style="color:white;">修改密码</a>　|　<a href="/logout.html" style="color:white;">退出</a>
+		<#else>
+			<a href="/to_login.html" style="color:white;">登录</a>
+		</#if>
+	</div>
+	<div class="clear"></div>
+	
+	<#if mygroup??>
+	<div id="bars" style="border:1px solid #E8000C;padding:10px;text-align:center;display:none;">
+		<#if mygroup.indexOf('adminrequirement')!=-1><a href="/adminrequirement/my.html" class="bar">项目管理</a></#if>
+		<#if mygroup.indexOf('adminfeedback')!=-1><a href="/adminfeedback/crm_select.html" class="bar">客服系统</a></#if>
+		<#if mygroup.indexOf('adminchangebankcard')!=-1 || mygroup.indexOf('adminsmsbatchsend')!=-1>
+		<a href="<#if mygroup.indexOf('adminchangebankcard')!=-1>/adminchangebankcard/select.html<#else>/adminsmsbatchsend/add.html</#if>" class="bar">运营系统</a></#if>
+		<#if mygroup.indexOf('adminqa')!=-1><a href="/adminqa/select.html" class="bar">问答系统</a></#if>
+		<#if mygroup.indexOf('adminconfig')!=-1 || mygroup.indexOf('adminversion')!=-1><a href="/adminversion/add.html" class="bar">系统配置</a></#if>
+		<#if mygroup.indexOf('adminapi')!=-1 || mygroup.indexOf('admindb')!=-1><a href="/adminapi/select.html" class="bar">接口管理</a></#if>
+		<#if mygroup.indexOf('fcs')!=-1><a href="/fcstocashdetail/select.html" class="bar">财务系统</a></#if>
+		<#if mygroup.indexOf('adminsite')!=-1><a href="/adminsite/team_select.html" class="bar">官网管理</a></#if>
+		<#if mygroup.indexOf('adminsystemlog')!=-1><a href="/adminsystemlog/select.html" class="bar">日志系统</a></#if>
+		<#if mygroup.indexOf('dossaccounttrade')!=-1><a href="/dossaccounttrade/select.html" class="bar">DOSS系统</a></#if>
+		<#if loginUser.userno?? && (loginUser.userno='13735575397' || loginUser.userno='15257144733') ><a href="/fabiao/itemlist.html" class="bar">待上线产品</a></#if>
+	</div>
+	</#if>
+</div>
+
+<style>
+	.bar {
+		cursor: pointer;
+		margin: 3px 0 0 0;
+		padding: 4px 18px 4px 18px;
+		padding-top: 8px\9;
+		text-decoration: none;
+		color: white;
+		border: 1px solid white;
+		background: #E8000C;
+	}
+</style>
+
+<script>
+	$('#header').bind('mouseover',function(){
+		$('#bars').show();
+	}).bind('mouseout',function(){
+		$('#bars').hide();
+	});
+</script>
+
+<br>

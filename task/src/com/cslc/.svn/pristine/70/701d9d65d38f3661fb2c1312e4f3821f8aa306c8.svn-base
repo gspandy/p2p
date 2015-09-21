@@ -1,0 +1,45 @@
+package com.cslc.dao.selfitemdetail;
+
+import java.util.Date;
+import com.platform.base.BaseEntity;
+
+public class Selfitemdetail extends BaseEntity {
+
+	private Long id;
+	private String title;
+	private String json;
+	private Long agreementid;
+
+	public Long getId(){
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTitle(){
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getJson(){
+		return json;
+	}
+
+	public void setJson(String json) {
+		this.json = json;
+	}
+
+	public Long getAgreementid(){
+		return agreementid;
+	}
+
+	public void setAgreementid(Long agreementid) {
+		this.agreementid = agreementid;
+	}
+
+}

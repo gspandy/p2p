@@ -1,0 +1,10 @@
+<div class="admin-left-menu">
+		<#if mygroup.indexOf('adminapi')!=-1 ><a href="/adminapi/select.html" <#if PageMenu?? && PageMenu='apilist'>class="menu_selected"</#if>>API Manager</a><a href="/adminapi/add.html">+</a><br></#if>
+		<#if mygroup.indexOf('adminapi')!=-1 ><a href="/adminapi/api.html?ip=192.168.1.199:8085&accountid=100000000000000021&itemid=100000000000000013" target="_blank">API Document</a><br></#if>
+		<#if mygroup.indexOf('adminapi')!=-1 ><a href="/adminapi/test.html?ip=192.168.1.199:8085&code=20001" <#if PageMenu?? && PageMenu='apitest'>class="menu_selected"</#if>>API Test</a><br><br></#if>
+		<#if mygroup.indexOf('admindb')!=-1 ><a href="/admindb/select.html" <#if PageMenu?? && PageMenu='db'>class="menu_selected"</#if>>DB Manager</a><a href="/admindb/add.html">+</a><br></#if>
+		<#if mygroup.indexOf('admindb')!=-1 ><a href="/admindb/db.html" target="_blank">DB Document</a><br><br></#if>
+		
+		<#--<a href="/admintables/add.html" target="_blank">数据查询</a><br><br>-->
+	
+</div>

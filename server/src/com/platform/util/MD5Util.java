@@ -1,0 +1,86 @@
+package com.platform.util;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.security.MessageDigest;
+
+import org.apache.log4j.Logger;
+
+import com.platform.constant.SystemConstant;
+
+public class MD5Util {
+
+	private static Logger log = org.apache.log4j.Logger.getLogger(MD5Util.class);
+
+	public static String encrypt(String password) {
+		String result = null;
+		if (password != null) {
+			try {
+				MessageDigest ca = MessageDigest.getInstance("md5");
+				result = "";
+				byte mess[] = password.getBytes();
+				ca.reset();
+				byte[] hash = ca.digest(mess);
+				result = byte2hex(hash);
+			} catch (Exception e) {
+				log.error(e);
+			}
+		}
+		return result;
+	}
+
+	public static String getMd5ByFile(File file) throws FileNotFoundException {
+		String value = null;
+		FileInputStream in = new FileInputStream(file);
+		try {
+			MappedByteBuffer byteBuffer = in.getChannel().map(FileChannel.MapMode.READ_ONLY, 0, file.length());
+			MessageDigest md5 = MessageDigest.getInstance("MD5");
+			md5.update(byteBuffer);
+			BigInteger bi = new BigInteger(1, md5.digest());
+			value = bi.toString(16);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (null != in) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return value;
+	}
+
+	private static String byte2hex(byte[] b) {
+		String hs = "";
+		String stmp = "";
+		for (int n = 0; n < b.length; n++) {
+			stmp = (Integer.toHexString(b[n] & 0XFF));
+			if (stmp.length() == 1)
+				hs = hs + "0" + stmp;
+			else
+				hs = hs + stmp;
+		}
+		return hs;
+	}
+
+	public static void main(String[] args) {
+		// System.out.println(MD5Util.encrypt(MD5Util.encrypt("123456") +
+		// SystemConstant.PAYPWD_KEY));
+		// System.out.println(MD5Util.encrypt(MD5Util.encrypt("123456") +
+		// SystemConstant.LOGINPWD_KEY));
+		System.out.println(MD5Util.encrypt("OI1342JHOUASDF;LKAHSER"));
+		// System.out.println(MD5Util.encrypt("654321"));
+		// System.out.println(MD5Util.encrypt("43def374412666a96dc8e45532d6b6e0"
+		// + "ludan"));
+
+		// 986b72e1ae3f90dbae71aa55ffb8960b
+	}
+
+}

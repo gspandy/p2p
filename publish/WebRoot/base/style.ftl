@@ -1,0 +1,14 @@
+<title>财术理财 | ${PageTitle!}</title>
+<meta charset="utf-8">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+
+<script type="text/javascript" src="/style/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/style/js/cookie.js"></script>
+<script type="text/javascript" src="/style/js/fieldcheck.js"></script>
+<script type="text/javascript" src="/style/js/page.js"></script>
+<script type="text/javascript" src="/style/js/toolbox.js"></script>
+<script type="text/javascript" src="/style/js/datepicker/WdatePicker.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/style/style.css" />

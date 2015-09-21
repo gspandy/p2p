@@ -1,0 +1,9 @@
+<style>
+	.item{padding:15px;border:1px solid #E8000C;width:200px;}
+</style>
+
+<div style="text-align:center;">
+	<a href="/adminsite/team_select.html"><div class="item">官网后台</div></a><br>
+	<a href="/adminfeedback/crm_select.html"><div class="item">客服系统</div></a><br>
+	<a href="/adminapi/select.html"><div class="item">系统工具</div></a><br>
+</div>

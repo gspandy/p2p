@@ -1,0 +1,12 @@
+<div class="admin-left-menu">
+	<#if modules.indexOf('admincms')!=-1 ><a href="/admincms/selectbanner.html" <#if PageMenu?? && PageMenu='selectbanner'>class="menu_selected"</#if>>Banner</a><br></#if>
+	<#if modules.indexOf('admincms')!=-1 ><a href="/admincms/selectstartpage.html" <#if PageMenu?? && PageMenu='selectstartpage'>class="menu_selected"</#if>>启动页</a><br></#if>
+	<#if modules.indexOf('admincms')!=-1 ><a href="/admincms/tradeSearch.html" <#if PageMenu?? && PageMenu='tradeSearch'>class="menu_selected"</#if>>交易查询</a><br></#if>
+	<#if modules.indexOf('admincms')!=-1 ><a href="/admincms/cashbackSearch.html" <#if PageMenu?? && PageMenu='cashbackSearch'>class="menu_selected"</#if>>回款查询</a><br></#if>
+	<#if modules.indexOf('admincms')!=-1 ><a href="/admincms/bonusSearch.html" <#if PageMenu?? && PageMenu='bonusSearch'>class="menu_selected"</#if>>红包查询</a><br></#if>
+	<#if modules.indexOf('admincms')!=-1 ><a href="/admincms/scoreSearch.html" <#if PageMenu?? && PageMenu='scoreSearch'>class="menu_selected"</#if>>积分查询</a><br></#if>
+	<#if modules.indexOf('admincms')!=-1 ><a href="/admincms/taskSearch.html" <#if PageMenu?? && PageMenu='taskSearch'>class="menu_selected"</#if>>任务查询</a><br></#if>
+	<#if modules.indexOf('admincms')!=-1 ><a href="/admincms/feedbackSearch.html" <#if PageMenu?? && PageMenu='feedbackSearch'>class="menu_selected"</#if>>反馈查询</a><br></#if>
+	<#if modules.indexOf('admincms')!=-1 ><a href="/admincms/messageSearch.html" <#if PageMenu?? && PageMenu='messageSearch'>class="menu_selected"</#if>>消息查询</a><br></#if>
+	<#if modules.indexOf('admincms')!=-1 ><a href="/admincms/smsSearch.html" <#if PageMenu?? && PageMenu='smsSearch'>class="menu_selected"</#if>>短信查询</a><br></#if>
+</div>

@@ -1,0 +1,37 @@
+<div id="header" style="background:#FEAE11;color:white;padding:10px;">
+	<div style="float:left;width:200px;"><img src="/style/image/logo.png"></div>
+	<div style="float:right;width:200px;text-align:right;">
+		<#if loginUser??>
+			${loginUser.mobile!}　|　<a href="/logout.html" style="color:white;">退出</a>
+		<#else>
+			<a href="/to_login.html" style="color:white;">登录</a>
+		</#if>
+	</div>
+	<div class="clear"></div>
+	
+	<#if modules??>
+	<div id="bars" style="padding:10px;text-align:center;display:none;">
+		<#if modules.indexOf('crm')!=-1><a href="/admincrm/index.html" class="bar" <#if PageBar?? && PageBar='crm'>style="background: #E8000C;"</#if>>客服系统</a></#if>
+		<#if modules.indexOf('adminchangebankcard')!=-1 || modules.indexOf('adminsmsbatchsend')!=-1>
+		<a href="<#if modules.indexOf('adminchangebankcard')!=-1>/adminchangebankcard/select.html<#else>/adminsmsbatchsend/add.html</#if>" class="bar">运营系统</a></#if>
+		<#if modules.indexOf('adminqa')!=-1><a href="/adminqa/select.html" class="bar">问答系统</a></#if>
+		<#if modules.indexOf('adminconfig')!=-1 || modules.indexOf('adminversion')!=-1><a href="/adminversion/add.html" class="bar">系统配置</a></#if>
+		<#if modules.indexOf('adminapi')!=-1 || modules.indexOf('admindb')!=-1><a href="/adminapi/select.html" class="bar">接口管理</a></#if>
+		<#if modules.indexOf('fcs')!=-1><a href="/fcstocashdetail/select.html" class="bar">财务系统</a></#if>
+		<#if modules.indexOf('adminsite')!=-1><a href="/adminsite/team_select.html" class="bar">官网管理</a></#if>
+		<#if modules.indexOf('adminsystemlog')!=-1><a href="/adminsystemlog/select.html" class="bar">日志系统</a></#if>
+		<#if modules.indexOf('dossaccounttrade')!=-1><a href="/dossaccounttrade/select.html" class="bar">DOSS系统</a></#if>
+		<#if loginUser.userno?? && (loginUser.userno='13735575397' || loginUser.userno='15257144733') ><a href="/fabiao/itemlist.html" class="bar">待上线产品</a></#if>
+	</div>
+	</#if>
+</div>
+
+<script>
+	$('#header').bind('mouseover',function(){
+		$('#bars').show();
+	}).bind('mouseout',function(){
+		$('#bars').hide();
+	});
+</script>
+
+<br>

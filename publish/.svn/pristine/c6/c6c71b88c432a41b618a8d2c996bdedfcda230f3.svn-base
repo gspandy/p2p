@@ -1,0 +1,19 @@
+<div class="admin-left-menu">
+	<#if mygroup.indexOf('adminsmsbatchsend')!=-1 ><a href="/adminsmsbatchsend/add.html" <#if PageMenu?? && PageMenu='adminsmsbatchsend'>class="menu_selected"</#if>>发送短信</a><br></#if>
+	<#if mygroup.indexOf('adminyimeisms')!=-1 ><a href="/adminyimeisms/yimeissend.html" <#if PageMenu?? && PageMenu='yimeissend'>class="menu_selected"</#if>>亿美营销短信</a><br></#if>
+	<#if mygroup.indexOf('adminchangebankcard')!=-1 ><a href="/adminchangebankcard/select.html" <#if PageMenu?? && PageMenu='changebankcard'>class="menu_selected"</#if>>换卡审核</a><br></#if>
+	<#if mygroup.indexOf('adminpushmessage')!=-1 ><a href="/adminpushmessage/select.html" <#if PageMenu?? && PageMenu='pushmessage'>class="menu_selected"</#if>>消息推送</a><a href="/adminpushmessage/message.html">+</a><br></#if>
+	<#if mygroup.indexOf('adminddbrecord')!=-1 ><a href="/adminddbrecord/select.html" <#if PageMenu?? && PageMenu='adminddbrecord'>class="menu_selected"</#if>>点点宝记录</a><br></#if>
+	<#if mygroup.indexOf('scorerule')!=-1 ><a href="/scorerule/scorerulelist.html" <#if PageMenu?? && PageMenu='scorerule'>class="menu_selected"</#if>>点币系统</a><br></#if>
+	<#if mygroup.indexOf('changepage')!=-1 >
+		<a href="/changepage/selectbanner.html" <#if PageMenu?? && PageMenu='selectbanner'>class="menu_selected"</#if>>上下架Banners</a><br>
+		<a href="/changepage/selectstartpage.html" <#if PageMenu?? && PageMenu='selectstartpage'>class="menu_selected"</#if>>启动页面</a><br>
+		<a href="/changepage/selectrecommend.html" <#if PageMenu?? && PageMenu='selectrecommend'>class="menu_selected"</#if>>首页推荐</a><br>
+		<a href="/changepage/selectwarnning.html" <#if PageMenu?? && PageMenu='selectwarnning'>class="menu_selected"</#if>>公告</a><br>
+		<a href="/changepage/selectwarnningdetail.html" <#if PageMenu?? && PageMenu='selectwarnningdetail'>class="menu_selected"</#if>>公告详情配置</a><br>
+		<a href="/changepage/selectblacklist.html" <#if PageMenu?? && PageMenu='selectblacklist'>class="menu_selected"</#if>>设备登陆黑名单</a><br>
+	</#if>
+	
+	<#if mygroup.indexOf('dsforopeate')!=-1 ><a href="/dsforopeate/dsaccount.html"  target="_blank"><font color="#1878A1">数据仓库</font></a></#if>
+	
+</div>

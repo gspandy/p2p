@@ -1,0 +1,24 @@
+log4j.rootLogger=error,stdout,logfile
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%-5p[%c.%M()][%L]: %m%n
+ 
+log4j.appender.logfile=org.apache.log4j.RollingFileAppender
+log4j.appender.logfile.File=/caishulicai-log/task/task.log
+log4j.appender.logfile.encoding=GB18030
+log4j.appender.logfile.MaxFileSize=10240KB
+log4j.appender.logfile.MaxBackupIndex=30
+log4j.appender.logfile.layout=org.apache.log4j.PatternLayout
+log4j.appender.logfile.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %c.%M()%n%p: <%m>%n
+
+log4j.logger.org.directwebremoting=error
+log4j.logger.org.springframework=error
+
+#print sql
+#log4j.logger.com.ibatis=debug
+#log4j.logger.com.ibatis.common.jdbc.SimpleDataSource=debug
+#log4j.logger.com.ibatis.common.jdbc.ScriptRunner=debug
+#log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate=debug
+#log4j.logger.java.sql.Connection=debug
+#log4j.logger.java.sql.Statement=debug
+#log4j.logger.java.sql.PreparedStatement=debug,stdout

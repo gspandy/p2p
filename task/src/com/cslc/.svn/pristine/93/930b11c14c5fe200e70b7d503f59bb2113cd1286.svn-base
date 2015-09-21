@@ -1,0 +1,44 @@
+package com.cslc.dao.activitylog;
+
+import java.util.List;
+import java.util.Map;
+import com.platform.base.MysqlBaseDao;
+import org.springframework.stereotype.Service;
+
+@Service("activitylogDao")
+public class ActivitylogDao extends MysqlBaseDao {
+
+	public Activitylog selectById(Long id) {
+		Object meta = queryForObject("Activitylog.selectById", id);
+		if(meta != null){
+			return (Activitylog) meta;
+		}
+		return null;
+	}
+
+	public Long insert(Activitylog meta) {
+		return insert("Activitylog.insert", meta);
+	}
+
+	public boolean delete(Long id) {
+		return delete("Activitylog.delete", id);
+	}
+
+	public boolean update(Activitylog meta) {
+		return update("Activitylog.update", meta);
+	}
+
+	public List<Activitylog> select(Map<String, Object> map) {
+		return (List<Activitylog>) queryForList("Activitylog.select", map);
+	}
+
+	public long selectCount(Map<String, Object> map) {
+		return (Long) queryForObject("Activitylog.selectCount", map);
+	}
+
+	public double selectSum(Map<String, Object> map) {
+		return (Double) queryForObject("Activitylog.selectSum", map);
+	}
+
+}
+

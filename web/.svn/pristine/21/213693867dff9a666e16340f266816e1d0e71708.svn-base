@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="../style/style.css">
+<div>
+    <div class="activity-item">
+        <div class="active-left"><img class="active-img" src="images/banner.png" /></div>
+        <div class="active-right">
+            <div class="active-up"><span>2015-09-10</span> <span>14:25:26</span></div>
+            <div class="active-down-new">新手引导</div>
+        </div>
+    </div>
+   <#if records??>
+     <#list records as l>    
+    
+    <div class="activity-item">
+        <div class="active-left"><img class="active-img" src="${l.img!}" /></div>
+        <div class="active-right">
+            <div class="active-up"><span>${(l.endtime?string("yyyy-MM-dd HH:mm:ss"))!}</span></div>
+            <#if l.status?? & l.status=0>
+             <div class="active-down-ing">未上线</div>
+            </#if>
+            <#if l.status?? & l.status=1>
+             <div class="active-down-ing">进行中</div>
+            </#if>
+            <#if l.status?? & l.status=2>
+             <div class="active-down-end">已结束</div>
+            </#if>
+            
+        </div>
+    </div>
+    
+    
+     </#list>
+      </#if>
+    
+</div>

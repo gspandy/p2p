@@ -1,0 +1,74 @@
+package com.publish.action;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.cslc.dao.account.Account;
+import com.cslc.dao.account.AccountDao;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+import com.platform.util.MD5Util;
+import com.platform.util.StringUtil;
+import com.publish.CookieUtil;
+import com.publish.interceptor.Department;
+
+@ParentPackage("web")
+@Namespace("/")
+public class LoginAction extends BaseAction {
+
+    @Resource
+    private AccountDao accountDao;
+
+    @Action("to_login")
+    public String toLogin() {
+        String url = getParameter("url");
+        request.setAttribute("url", url);
+        return layout(null, null, "登录", "/user/to_login.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+
+    @Action("login")
+    public String login() {
+        String mobile = getParameter("mobile");
+        String password = request.getParameter("password");
+        String url = getParameter("url");
+
+        if (mobile.length() == 11) {
+            request.setAttribute("mobile", mobile);
+
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("status", Account.STATUS_NORMAL);
+            map.put("mobile", mobile);
+            map.put("password", MD5Util.encrypt(password));
+            List<Account> accountList = accountDao.select(map);
+            if (accountList.size() > 0) {
+            	Account account = accountList.get(0);
+                CookieUtil.setUserCookie(account, response);
+                if (StringUtil.isBlank(url)) {
+                    if (account.getGroupno().equals(Department.GROUP_DATA)) {
+                        url = "/adminfeedback/crm_select.html";
+                    } else {
+                        url = "/error.html";
+                    }
+                }
+                return redirect(url);
+            }
+        }
+        request.setAttribute("url", url);
+        request.setAttribute("errorMsg", "登录失败");
+        return layout(null, null, "登录", "/user/to_login.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+
+    @Action("logout")
+    public String logout() {
+        CookieUtil.delUserCookie(request, response);
+        return redirect("/to_login.html");
+    }
+
+}

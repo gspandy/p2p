@@ -1,0 +1,110 @@
+package com.server.interceptor;
+
+import java.net.URLDecoder;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.apache.struts2.StrutsStatics;
+
+import com.alibaba.fastjson.JSONObject;
+import com.cslc.dao.account.Account;
+import com.cslc.dao.account.AccountDao;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.interceptor.Interceptor;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+import com.platform.util.StringUtil;
+import com.platform.util.encrypt.AES;
+
+public class DecryptInterceptor implements Interceptor {
+	
+	protected static Logger log = Logger.getLogger(BaseAction.class);
+	protected static Logger urlsLog = Logger.getLogger("urlsLog");
+	
+	@Resource
+	private AccountDao accountDao;
+
+	public String intercept(ActionInvocation invocation) throws Exception {
+		ActionContext actionContext = invocation.getInvocationContext();
+		HttpServletRequest request = (HttpServletRequest) actionContext.get(StrutsStatics.HTTP_REQUEST);
+		
+		if(!SystemConstant.PARAMS_ENCRYPT || request.getRequestURI().startsWith("/callback/") || (SystemConstant.X_ENABLE && request.getRequestURI().startsWith("/x/"))){
+			return invocation.invoke();
+		}
+
+		Map ps = request.getParameterMap();
+		Object ks = ps.get("k");
+		Object vs = ps.get("v");
+		
+		TreeMap<String, Object> params = new TreeMap<String, Object>();
+		if(ks != null && vs != null){
+			String k = ((String[]) ks)[0];
+			String v = ((String[]) vs)[0];
+			if(StringUtil.isNotBlank(k) && StringUtil.isNotBlank(v) && k.length() == 16){
+				k = k.substring(7) + k.substring(0, 7);
+				v = URLDecoder.decode(v).replace(" ", "+");
+				try {	
+					String json = AES.decryptFromBase64(v, k);
+					Map map = JSONObject.parseObject(json);
+					if(map != null){
+						Set<Map.Entry> s = map.entrySet();
+						for(Map.Entry m : s){
+							if(m.getValue() instanceof String){
+								String ss = (String) m.getValue();
+								// post无需转码, get需要转码
+								if(!SystemConstant.PARAMS_ENCRYPT && "GET".equals(request.getMethod())){
+									ss = new String(ss.getBytes("iso8859-1"), "utf-8");
+								}
+								if(StringUtil.isNotBlank(ss)){
+									params.put((String) m.getKey(), new String[]{ss});
+								}
+							}
+						}
+						
+						// 包含参数accountid，则取账户动态密码解密。否则视为公开链接，使用默认密码解密。
+						String dynamicpwd = SystemConstant.DYNAMICPWD_KEY;
+						if(params.get("accountid") != null){
+							String accountid = ((String[]) params.get("accountid"))[0];
+							if(StringUtil.isNotBlank(accountid)){
+								Account account = accountDao.selectById(Long.parseLong(accountid));
+								if(account != null){
+									dynamicpwd = account.getDynamicpwd();
+								}
+							}
+						}
+						if(k.equals(dynamicpwd)){
+							request.setAttribute("paramsMap", params);
+							request.setAttribute("decrypt39ba59163ad2165d", true);
+							return invocation.invoke();
+						}else{
+							return "login";
+						}
+					}
+				} catch (Exception e) {
+					log.error(e);
+					return "login";
+				}
+			}
+		}else{
+			request.setAttribute("paramsMap", params);
+			request.setAttribute("decrypt39ba59163ad2165d", true);
+			return invocation.invoke();
+		}
+		return "error";
+	}
+
+	public void destroy() {
+
+	}
+
+	public void init() {
+
+	}
+
+}

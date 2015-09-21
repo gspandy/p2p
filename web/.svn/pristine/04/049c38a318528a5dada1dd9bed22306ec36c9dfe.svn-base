@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="../style/style.css">
+<section>
+    <ul>
+        <li class="describe-li">
+            <div class="describe-item"><h2 class="describe-h2"><img  class="describe-img" src="images/blackpoint.png">担保方式</h2></div>
+            <h3 class="describe-h3">${(danbaofangshi)!}</h3>
+        </li>
+        <li class="describe-li">
+            <div class="describe-item"><h2 class="describe-h2"><img  class="describe-img" src="images/blackpoint.png">担保方介绍</h2></div>
+            <h3 class="describe-h3">${(danbaofang)!}</h3>
+        </li>
+        <li class="describe-li">
+            <div class="describe-item"><h2 class="describe-h2"><img  class="describe-img" src="images/blackpoint.png">资金安全</h2></div>
+            <h3 class="describe-h3">${(zijinanquan)!}</h3>
+        </li>
+        <li class="describe-li">
+            <div class="describe-item"><h2 class="describe-h2"><img  class="describe-img" src="images/blackpoint.png">相关文件</h2></div>
+            <h3 class="describe-h3">${(securityfiles)!}</h3>
+        </li>
+    </ul>
+</section>

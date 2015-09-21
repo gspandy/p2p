@@ -1,0 +1,43 @@
+
+<#include "/cms/menu.ftl" />
+<div class="admin-right-content">
+${errorMsg!}
+ <form action="modifystartpage.html" method="post">
+    
+ android图片地址：<input type="text" name="android"  value="${(android)!}" style="width:350px;" > </br></br>
+  ios图片地址：<input type="text" name="ios"  value="${(ios)!}" style="width:350px;" >
+ </br>
+ </br>
+<input type="submit" class="submit"  onclick="return sub()"  value="修改">
+</form>
+ </br>
+  </br>
+ </br>
+ <h2 style="color:red" >启动图片导入</h2>
+  <font style="color:red">${(fileurl)!}</font> 
+  </br>
+ </br>
+
+<form action="insertstartpage.html" method="post" enctype="multipart/form-data">
+图片<input type="file" name="upload"><br><br>
+图片种类	
+<select  name="imagetype">
+		 <option value="1" >ios</option>
+		 <option value="2" >android</option>
+</select>
+	  </br>
+	  </br>
+<input type="submit" class="submit"  value="提交">
+</form>
+
+
+<script type="text/javascript">
+function sub() { 
+
+if(confirm("你确定要修改吗？")){
+return true;
+}else{
+return false;
+}
+} 
+</script>

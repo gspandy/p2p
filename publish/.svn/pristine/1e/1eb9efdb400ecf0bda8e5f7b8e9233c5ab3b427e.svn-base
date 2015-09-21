@@ -1,0 +1,351 @@
+package com.publish.action;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.cslc.dao.account.Account;
+import com.cslc.dao.account.AccountDao;
+import com.cslc.dao.accountasset.Accountasset;
+import com.cslc.dao.accountasset.AccountassetDao;
+import com.cslc.dao.accountbankcard.Accountbankcard;
+import com.cslc.dao.accountbankcard.AccountbankcardDao;
+import com.cslc.dao.accountconfig.Accountconfig;
+import com.cslc.dao.accountconfig.AccountconfigDao;
+import com.cslc.dao.accountselfitem.Accountselfitem;
+import com.cslc.dao.accountselfitem.AccountselfitemDao;
+import com.cslc.dao.bonus.Bonus;
+import com.cslc.dao.bonus.BonusDao;
+import com.cslc.dao.cashback.Cashback;
+import com.cslc.dao.cashback.CashbackDao;
+import com.cslc.dao.feedback.Feedback;
+import com.cslc.dao.feedback.FeedbackDao;
+import com.cslc.dao.message.Message;
+import com.cslc.dao.message.MessageDao;
+import com.cslc.dao.score.Score;
+import com.cslc.dao.score.ScoreDao;
+import com.cslc.dao.selfitem.Selfitem;
+import com.cslc.dao.selfitem.SelfitemDao;
+import com.cslc.dao.sms.Sms;
+import com.cslc.dao.sms.SmsDao;
+import com.cslc.dao.task.Task;
+import com.cslc.dao.task.TaskDao;
+import com.cslc.dao.tasklog.Tasklog;
+import com.cslc.dao.tasklog.TasklogDao;
+import com.cslc.dao.trade.Trade;
+import com.cslc.dao.trade.TradeDao;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+import com.platform.util.PageUtil;
+import com.platform.util.StringUtil;
+import com.publish.CookieUtil;
+
+@ParentPackage("web")
+@Namespace("/admincrm")
+public class CrmAction extends BaseAction {
+
+	@Resource
+	private AccountDao accountDao;
+
+	@Resource
+	private AccountassetDao accountassetDao;
+	
+	@Resource
+	private AccountconfigDao accountconfigDao;
+	
+	@Resource
+	private AccountselfitemDao accountselfitemDao;
+	
+	@Resource
+	private AccountbankcardDao accountbankcardDao;
+
+	@Resource
+	private TradeDao tradeDao;
+
+	@Resource
+	private CashbackDao cashbackDao;
+
+	@Resource
+	private BonusDao bonusDao;
+
+	@Resource
+	private ScoreDao scoreDao;
+
+	@Resource
+	private TaskDao taskDao;
+
+	@Resource
+	private TasklogDao tasklogDao;
+
+	@Resource
+	private FeedbackDao feedbackDao;
+
+	@Resource
+	private MessageDao messageDao;
+
+	@Resource
+	private SelfitemDao selfitemDao;
+
+	@Resource
+	private SmsDao smsDao;
+
+	@Action("accountdetail")
+	public String accountdetail() {
+		String mobile = getParameter("mobile");
+		
+		Account temp = new Account();
+		temp.setMobile(mobile);
+		request.setAttribute("account", temp);
+		
+		if (StringUtil.isNotBlank(mobile) && mobile.length() == 11) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("mobile", mobile);
+			List<Account> accountList = accountDao.select(map);
+			if (!accountList.isEmpty()) {
+				Account account = accountList.get(0);
+				map.put("accountid", account.getId());
+				Accountasset accountasset = accountassetDao.selectById(account.getId());
+				account.setAccountasset(accountasset);
+				Account inviter = accountDao.selectById(account.getInviteid());
+				Accountconfig config = accountconfigDao.selectById(account.getId());
+				account.setAccountconfig(config);
+				request.setAttribute("account", account);
+				request.setAttribute("inviter", inviter);
+			}
+		}else{
+			return redirect("/admincrm/feedbackall.html");
+		}
+		return layout("crm", "accountdetail", "用户信息", "/crm/accountdetail.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+	
+	@Action("accountselfitem")
+	public String accountselfitem() {
+		long accountid = Long.parseLong(getParameter("accountid"));
+		
+		Account account = accountDao.selectById(accountid);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountid", accountid);
+		map.put("orderBy", "createtime desc");
+		PageUtil.getMap(map, getParameter("currentPage"), accountselfitemDao.selectCount(map), "10");
+		List<Accountselfitem> accountselfitemList = accountselfitemDao.select(map);
+		for (Accountselfitem accountselfitem : accountselfitemList) {
+			Selfitem selfitem = selfitemDao.selectById(accountselfitem.getSelfitemid());
+			accountselfitem.setSelfitem(selfitem);
+		}
+		request.setAttribute("map", map);
+		request.setAttribute("list", accountselfitemList);
+		request.setAttribute("account", account);
+		return layout("crm", "accountselfitem", "投资列表", "/crm/accountselfitem.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+
+	@Action("trade")
+	public String trade() {
+		long accountid = Long.parseLong(getParameter("accountid"));
+		
+		Account account = accountDao.selectById(accountid);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountid", accountid);
+		map.put("orderBy", "createtime desc");
+		PageUtil.getMap(map, getParameter("currentPage"), tradeDao.selectCount(map), "10");
+		List<Trade> tradeList = tradeDao.select(map);
+		for (Trade trade : tradeList) {
+			Selfitem selfitem = selfitemDao.selectById(trade.getSelfitemid());
+			trade.setSelfitem(selfitem);
+			Accountbankcard bankcard = accountbankcardDao.selectById(trade.getBankcardid());
+			trade.setAccountbankcard(bankcard);
+		}
+		request.setAttribute("list", tradeList);
+		request.setAttribute("map", map);
+		request.setAttribute("account", account);
+		return layout("crm", "trade", "交易记录", "/crm/trade.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+	
+	@Action("cashback")
+	public String cashback() {
+		long accountid = Long.parseLong(getParameter("accountid"));
+		
+		Account account = accountDao.selectById(accountid);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountid", accountid);
+		map.put("orderBy", "createtime desc");
+		PageUtil.getMap(map, getParameter("currentPage"), cashbackDao.selectCount(map), "20");
+		List<Cashback> cashbackList = cashbackDao.select(map);
+		for (Cashback c : cashbackList) {
+			Accountbankcard bankcard = accountbankcardDao.selectById(c.getBankcardid());
+			c.setAccountbankcard(bankcard);
+		}
+		request.setAttribute("list", cashbackList);
+		request.setAttribute("account", account);
+		request.setAttribute("map", map);
+		return layout("crm", "cashback", "回款记录", "/crm/cashback.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+
+	@Action("bonus")
+	public String bonus() {
+		long accountid = Long.parseLong(getParameter("accountid"));
+		
+		Account account = accountDao.selectById(accountid);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountid", accountid);
+		map.put("orderBy", "createtime desc");
+		PageUtil.getMap(map, getParameter("currentPage"), bonusDao.selectCount(map), "10");
+		List<Bonus> bonusList = bonusDao.select(map);
+		request.setAttribute("list", bonusList);
+		request.setAttribute("account", account);
+		request.setAttribute("map", map);
+		return layout("crm", "bonus", "红包记录", "/crm/bonus.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+
+	@Action("score")
+	public String scoreSearch() {
+		long accountid = Long.parseLong(getParameter("accountid"));
+		
+		Account account = accountDao.selectById(accountid);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountid", accountid);
+		map.put("orderBy", "createtime desc");
+		PageUtil.getMap(map, getParameter("currentPage"),scoreDao.selectCount(map), "10");
+		List<Score> scoreList = scoreDao.select(map);
+		request.setAttribute("list", scoreList);
+		request.setAttribute("map", map);
+		request.setAttribute("account",account);
+		return layout("crm", "score", "积分记录", "/crm/score.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+
+	@Action("tasklog")
+	public String tasklog() {
+		long accountid = Long.parseLong(getParameter("accountid"));
+		
+		Account account = accountDao.selectById(accountid);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountid", accountid);
+		map.put("orderBy", "createtime desc");
+		PageUtil.getMap(map, getParameter("currentPage"),tasklogDao.selectCount(map), "10");
+		List<Tasklog> taskList = tasklogDao.select(map);
+		for (Tasklog c : taskList) {
+			Task t = taskDao.selectById(c.getTaskid());
+			c.setTask(t);
+		}
+		request.setAttribute("list", taskList);
+		request.setAttribute("map", map);
+		request.setAttribute("account", account);
+		return layout("crm", "tasklog", "任务记录", "/crm/tasklog.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+
+	@Action("message")
+	public String message() {
+		long accountid = Long.parseLong(getParameter("accountid"));
+		
+		Account account = accountDao.selectById(accountid);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountid", accountid);
+		map.put("orderBy", "createtime desc");
+		PageUtil.getMap(map, getParameter("currentPage"),messageDao.selectCount(map), "10");
+		List<Message> messageList = messageDao.select(map);
+		request.setAttribute("list", messageList);
+		request.setAttribute("map", map);
+		request.setAttribute("account", account);
+		return layout("crm", "message", "消息记录", "/crm/message.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+
+	@Action("sms")
+	public String sms() {
+		long accountid = Long.parseLong(getParameter("accountid"));
+		
+		Account account = accountDao.selectById(accountid);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mobile", account.getMobile());
+		map.put("orderBy", "createtime desc");
+		PageUtil.getMap(map, getParameter("currentPage"),smsDao.selectCount(map), "10");
+		List<Sms> smsList = smsDao.select(map);
+		request.setAttribute("list", smsList);
+		request.setAttribute("map", map);
+		request.setAttribute("account", account);
+		return layout("crm", "sms", "短信记录", "/crm/sms.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+	
+	@Action("feedback")
+	public String feedback() {
+		long accountid = Long.parseLong(getParameter("accountid"));
+		
+		Account account = accountDao.selectById(accountid);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accountid", accountid);
+		map.put("orderBy", "createtime desc");
+		PageUtil.getMap(map, getParameter("currentPage"),feedbackDao.selectCount(map), "20");
+		List<Feedback> feedbackList = feedbackDao.select(map);
+		for(Feedback f : feedbackList){
+			Account a = accountDao.selectById(f.getAccountid());
+			f.setAccount(a);
+		}
+		request.setAttribute("list", feedbackList);
+		request.setAttribute("map", map);
+		request.setAttribute("account", account);
+		return layout("crm", "feedback", "反馈记录", "/crm/feedback.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+	
+	@Action("feedbackall")
+	public String feedbackall() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("statusNE", Feedback.STATUS_RESOLVE);
+		PageUtil.getMap(map, getParameter("currentPage"),feedbackDao.selectCount(map), "20");
+		List<Feedback> feedbackList = feedbackDao.select(map);
+		for(Feedback f : feedbackList){
+			Account a = accountDao.selectById(f.getAccountid());
+			f.setAccount(a);
+		}
+		request.setAttribute("list", feedbackList);
+		request.setAttribute("map", map);
+		return layout("crm", null, "答疑解惑", "/crm/feedbackall.ftl", SystemConstant.LAYOUT_ADMIN);
+	}
+	
+	
+	@Action("feedbackreply")
+	public void feedbackreply() {
+		long id = Long.parseLong(getParameter("id"));
+		String reply = getParameter("reply");
+		
+		Feedback f = feedbackDao.selectById(id);
+		if(f.getStatus() == Feedback.STATUS_NOT_REPLY){
+			Feedback fb = new Feedback();
+			fb.setId(id);
+			fb.setReply(reply);
+			fb.setReplytime(new Date());
+			Account manager = accountDao.selectById(CookieUtil.getLoginUser(request).getId());
+			fb.setManager(manager.getRealname());
+			fb.setStatus(Feedback.STATUS_REPLIED);
+			feedbackDao.update(fb);
+			ajax("success");
+			return;
+		}else{
+			ajax("failure");
+			return;
+		}
+	}
+	
+	@Action("feedbackresolve")
+	public void feedbackresolve() {
+		long id = Long.parseLong(getParameter("id"));
+		
+		Feedback f = feedbackDao.selectById(id);
+		if(f.getStatus() == Feedback.STATUS_REPLIED){
+			Feedback fb = new Feedback();
+			fb.setId(id);
+			fb.setStatus(Feedback.STATUS_RESOLVE);
+			feedbackDao.update(fb);
+			ajax("success");
+			return;
+		}else{
+			ajax("failure");
+			return;
+		}
+	}
+	
+}

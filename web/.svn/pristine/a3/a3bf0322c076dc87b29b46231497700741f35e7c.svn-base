@@ -1,0 +1,39 @@
+package com.h5.action;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.cslc.dao.account.Account;
+import com.cslc.dao.accountselfitem.Accountselfitem;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+import com.platform.util.PageUtil;
+import com.platform.util.StringUtil;
+
+@ParentPackage("web")
+public class SystemAction extends BaseAction{
+	
+	//注册成功
+	@Action("registsuccess")
+	public String registsuccess() {
+
+			return layout(null, null, "注册成功", "/h5/registsuccess.ftl", SystemConstant.LAYOUT_H5);
+	}
+	
+	
+	//支付成功
+	@Action("paysuccess")
+	public String paysuccess() {
+
+			return layout(null, null, "支付成功", "/h5/paysuccess.ftl", SystemConstant.LAYOUT_H5);
+	}
+	
+	
+	
+
+}

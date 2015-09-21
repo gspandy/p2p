@@ -1,0 +1,181 @@
+package com.server.action;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.cslc.dao.account.Account;
+import com.cslc.dao.account.AccountDao;
+import com.cslc.dao.accountbankcard.Accountbankcard;
+import com.cslc.dao.accountbankcard.AccountbankcardDao;
+import com.cslc.dao.bonus.Bonus;
+import com.cslc.dao.selfitem.Selfitem;
+import com.cslc.dao.selfitem.SelfitemDao;
+import com.cslc.dao.supportbank.Supportbank;
+import com.cslc.dao.supportbank.SupportbankDao;
+import com.cslc.dao.trade.Trade;
+import com.cslc.dao.trade.TradeDao;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+import com.platform.util.StringUtil;
+
+@ParentPackage("app")
+@Namespace("/")
+public class PayAction extends BaseAction{
+	@Resource
+	private AccountDao accountDao;
+	
+	@Resource
+	private SelfitemDao selfitemDao;
+	
+	@Resource
+	private AccountbankcardDao accountbankcardDao;	
+	
+	@Resource
+	private SupportbankDao supportbankDao;
+	
+	@Resource
+	private TradeDao tradeDao;
+	
+	    // 支付前置
+		@Action("114")
+		public void paypage() {
+			Long accountid = Long.parseLong(getParameter("accountid"));
+			Long selfitemid = Long.parseLong(getParameter("selfitemid"));
+			Long bankcardid = Long.parseLong(getParameter("bankcardid"));
+			String amount = getParameter("amount");
+			
+			
+			Account account = accountDao.selectById(accountid);
+			Selfitem item = selfitemDao.selectById(selfitemid);
+			Supportbank bank = supportbankDao.selectById(bankcardid);
+			Map<String, Object> result = new HashMap<String, Object>();
+
+	           double freezeamount = (item.getStatus() == Selfitem.STATUS_SELLOUT || item.getStatus() == Selfitem.STATUS_INCOME) ? 0 : item.getFreezeamount();
+	           if (item.getRestamount() + freezeamount <= 0) {
+	               result.put("returnCode", -1);
+	               result.put("returnMsg", "该产品已售完");
+	               print(result);
+	               return;
+	           }
+	           
+	           if (StringUtil.isNotBlank(amount)) {
+	               if (!StringUtil.isNumeric(amount)) {
+	                   result.put("returnCode", -1);
+	                   result.put("returnMsg", "输入金额有误，请重新输入");
+	                   print(result);
+	                   return;
+	               }
+	           }
+
+	           if ((account.getTradecount() > 0) && (item.getActivitytitle().equals("新手标"))) {
+	               result.put("returnCode", -1);
+	               result.put("returnMsg", "不允许申购新手产品");
+	               print(result);
+	               return;
+	           }
+	           
+
+	           Map<String, Object> map = new HashMap<String, Object>();
+	           map.put("accountid", accountid);
+	           map.put("bankcardid", bankcardid);
+	       	
+	           List<Accountbankcard> list = accountbankcardDao.select(map);
+	           if(list.size()>0){
+	        	   Accountbankcard card = list.get(0);
+	        	   
+	        	   if(card.getStatus()==Accountbankcard.STATUS_VERIFIED){
+	        		   
+	        		   result.put("bancardno", card.getBankcardno());
+	        		   result.put("amount", amount);
+	        	   }else{
+	        		   result.put("realname", account.getRealname());
+	        		   result.put("idcardno", account.getIdcardno());
+	        		   result.put("bankname", bank.getName());
+	        		   result.put("bancardno", card.getBankcardno());
+	        		   result.put("amount", amount);
+	        		   
+	        		   
+	        	   }
+	        	   result.put("returnCode", 0);
+		           result.put("returnMsg", "success");
+		           print(result);
+		           return;
+	           }
+	           
+	           
+               result.put("returnCode", -1);
+               result.put("returnMsg", "银行卡错误");
+               print(result);
+               return;
+
+		}
+		
+		
+		
+		 // 支付
+		@Action("115")
+		public void pay() {
+			
+			Long accountid = Long.parseLong(getParameter("accountid"));
+			Long selfitemid = Long.parseLong(getParameter("selfitemid"));
+			Long bankcardid = Long.parseLong(getParameter("bankcardid"));
+			String amount = getParameter("amount");
+			String bancardno = getParameter("bancardno");
+			String bankname = getParameter("bankname");
+			String idcardno = getParameter("idcardno");
+			String realname = getParameter("realname");
+			
+			Account account = accountDao.selectById(accountid);
+			
+			
+			Map<String, Object> result = new HashMap<String, Object>();
+
+	        if (StringUtil.isNotBlank(amount)) {
+	            if (!StringUtil.isNumeric(amount)) {
+	                result.put("returnCode", -1);
+	                result.put("returnMsg", "输入金额有误，请重新输入");
+	                print(result);
+	                return;
+	            }
+	        }
+
+	        
+	        Trade trade = new Trade();
+	        trade.setAmount(Double.parseDouble(amount));
+	        trade.setMobile(account.getMobile());
+	        trade.setBankcardid(bankcardid);
+	        trade.setPlatform(Byte.parseByte(StringUtil.getUserAgent(request, "platform")));
+	        trade.setVersion(StringUtil.getUserAgent(request, "appversion"));
+	        trade.setStatus(Trade.STATUS_PAY_SUCCESS);
+	        trade.setSelfitemid(selfitemid);
+	        trade.setAccountid(accountid);
+	        trade.setOrderno(String.valueOf(trade.getId()));
+	        trade.setIp(StringUtil.getUserAgent(request, "ip"));
+	        trade.setTerminalid(StringUtil.getUserAgent(request, "terminalid"));
+	        trade.setPhone(StringUtil.getUserAgent(request, "phone"));
+	        trade.setCreatetime(new Date());
+	        trade.setPaysuccesstime(new Date());
+	        trade.setFee(0.00);
+	   
+
+
+	  
+	      
+
+	     
+
+		}
+		
+		
+		
+	
+}

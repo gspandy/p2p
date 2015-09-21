@@ -1,0 +1,33 @@
+package com.publish.action;
+
+import javax.annotation.Resource;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+
+import com.cslc.dao.account.AccountDao;
+import com.cslc.dao.accountconfig.AccountconfigDao;
+import com.cslc.service.RegistService;
+import com.platform.base.BaseAction;
+import com.platform.constant.SystemConstant;
+
+@ParentPackage("web")
+@Namespace("/admincrm")
+public class CrmAction extends BaseAction {
+
+    @Resource
+    private AccountDao accountDao;
+
+    @Action("index")
+    public String index() {
+    	
+        return layout("crm", "index", "测试", "/crm/index.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+    
+    @Action("search")
+    public String search() {
+        return layout("crm", "index", "测试", "/crm/search.ftl", SystemConstant.LAYOUT_ADMIN);
+    }
+
+}

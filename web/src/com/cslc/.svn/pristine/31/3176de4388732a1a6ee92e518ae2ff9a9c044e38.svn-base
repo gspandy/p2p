@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+	<typeAlias alias="Accountasset" type="com.cslc.dao.accountasset.Accountasset" />
+
+	<sql id="Accountasset.RESULT">
+		selfitemcashbackamount,accountid,bonustotal,selfitemtotalincome,selfitemamount,selfitemrestincome,selfitemasset,scoreasset,selfitemtodayincome,bonusasset,scoretotal
+	</sql>
+
+	<sql id="Accountasset.WHERE">
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="selfitemcashbackamount"> selfitemcashbackamount = #selfitemcashbackamount:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="accountid"> accountid = #accountid:BIGINT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="bonustotal"> bonustotal = #bonustotal:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemtotalincome"> selfitemtotalincome = #selfitemtotalincome:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemamount"> selfitemamount = #selfitemamount:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemrestincomeGt"> selfitemrestincome > #selfitemrestincomeGt:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemasset"> selfitemasset > #selfitemasset:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="scoreasset"> scoreasset = #scoreasset:INT# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemtodayincome"> selfitemtodayincome = #selfitemtodayincome:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="selfitemtodayincomeGt"> selfitemtodayincome > #selfitemtodayincomeGt:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="bonusasset"> bonusasset = #bonusasset:DECIMAL# </isNotEmpty>
+			<isNotEmpty prepend="and" property="scoretotal"> scoretotal = #scoretotal:INT# </isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<select id="Accountasset.selectById" parameterClass="java.lang.Long" resultClass="Accountasset">
+		select <include refid="Accountasset.RESULT" /> from accountasset where accountid = #accountid:BIGINT#
+	</select>
+
+	<insert id="Accountasset.insert" parameterClass="Accountasset">
+		insert into accountasset
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="selfitemcashbackamount"> selfitemcashbackamount </isNotNull>
+			<isNotNull prepend="," property="accountid"> accountid </isNotNull>
+			<isNotNull prepend="," property="bonustotal"> bonustotal </isNotNull>
+			<isNotNull prepend="," property="selfitemtotalincome"> selfitemtotalincome </isNotNull>
+			<isNotNull prepend="," property="selfitemamount"> selfitemamount </isNotNull>
+			<isNotNull prepend="," property="selfitemrestincome"> selfitemrestincome </isNotNull>
+			<isNotNull prepend="," property="selfitemasset"> selfitemasset </isNotNull>
+			<isNotNull prepend="," property="scoreasset"> scoreasset </isNotNull>
+			<isNotNull prepend="," property="selfitemtodayincome"> selfitemtodayincome </isNotNull>
+			<isNotNull prepend="," property="bonusasset"> bonusasset </isNotNull>
+			<isNotNull prepend="," property="scoretotal"> scoretotal </isNotNull>
+			)
+		</dynamic>
+		values
+		<dynamic prepend="(">
+			<isNotNull prepend="," property="selfitemcashbackamount"> #selfitemcashbackamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="accountid"> #accountid:BIGINT# </isNotNull>
+			<isNotNull prepend="," property="bonustotal"> #bonustotal:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemtotalincome"> #selfitemtotalincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemamount"> #selfitemamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemrestincome"> #selfitemrestincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemasset"> #selfitemasset:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="scoreasset"> #scoreasset:INT# </isNotNull>
+			<isNotNull prepend="," property="selfitemtodayincome"> #selfitemtodayincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="bonusasset"> #bonusasset:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="scoretotal"> #scoretotal:INT# </isNotNull>
+			)
+		</dynamic>
+	</insert>
+
+	<delete id="Accountasset.delete" parameterClass="java.lang.Long">
+		delete from accountasset where accountid = #accountid:BIGINT#
+	</delete>
+
+	<update id="Accountasset.update" parameterClass="Accountasset">
+		update accountasset
+		<dynamic prepend="set">
+			<isNotNull prepend="," property="selfitemcashbackamount"> selfitemcashbackamount = #selfitemcashbackamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="accountid"> accountid = #accountid:BIGINT# </isNotNull>
+			<isNotNull prepend="," property="bonustotal"> bonustotal = #bonustotal:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemtotalincome"> selfitemtotalincome = #selfitemtotalincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemamount"> selfitemamount = #selfitemamount:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemrestincome"> selfitemrestincome = #selfitemrestincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="selfitemasset"> selfitemasset = #selfitemasset:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="scoreasset"> scoreasset = #scoreasset:INT# </isNotNull>
+			<isNotNull prepend="," property="selfitemtodayincome"> selfitemtodayincome = #selfitemtodayincome:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="bonusasset"> bonusasset = #bonusasset:DECIMAL# </isNotNull>
+			<isNotNull prepend="," property="scoretotal"> scoretotal = #scoretotal:INT# </isNotNull>
+		</dynamic>
+		WHERE accountid = #accountid:BIGINT#
+	</update>
+
+	<select id="Accountasset.select" parameterClass="java.util.Map" resultClass="Accountasset">
+		select <include refid="Accountasset.RESULT" /> from accountasset <include refid="Accountasset.WHERE" />
+		<isNotNull prepend="order" property="orderBy"> by $orderBy$ </isNotNull>
+		<isNotNull prepend="limit" property="size"> #first#,#size# </isNotNull>
+	</select>
+
+	<select id="Accountasset.selectCount" parameterClass="java.util.Map" resultClass="java.lang.Long">
+		select count(*) from accountasset <include refid="Accountasset.WHERE" />
+	</select>
+
+	<select id="Accountasset.selectSum" parameterClass="java.util.Map" resultClass="java.lang.Double">
+		select sum($field$) as sumField from accountasset <include refid="Accountasset.WHERE" />
+	</select>
+
+</sqlMap>

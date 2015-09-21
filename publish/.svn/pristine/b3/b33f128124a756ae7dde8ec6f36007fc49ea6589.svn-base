@@ -1,0 +1,41 @@
+<#include "/crm/menu.ftl" />
+
+<table class="tables">
+	<tr class="th">
+		<td>手机号</td>
+		<td>状态</td>
+		<td>渠道</td>
+		<td>提问</td>
+		<td>回复</td>
+		<td>创建时间</td>
+		<td>回复时间</td>
+		<td>后台人员</td>
+	</tr>
+	<#if feedbacks??>
+		<#list feedbacks as feedback>
+			<tr class="th">
+				<td>${feedback.mobile!}</td>
+				<td>${feedback.status!} </td>
+				<td>${feedback.channel!}</td>
+				<td>${feedback.question!}</td>
+				<td>${feedback.reply!}</td>
+				<td><#if feedback.createtime??>${feedback.createtime?string('yyyy-MM-dd')}</#if></td>
+				<td><#if feedback.replytime??>${feedback.replytime?string('yyyy-MM-dd')}</#if></td>
+				<td>${feedback.manager!}</td>
+			</tr>
+		</#list>
+	</#if>
+	
+	<#if list?exists>
+	<#list list as p>
+	<tr>
+		<td align="left">阿桑地方</td>
+		<td align="left">123</td>
+		<td width="80">阿桑地方</td>
+		<td width="80">
+			<a href="/adminapi/add.html">编辑</a>
+		</td>
+	</tr>
+	</#list>
+	</#if>
+</table>

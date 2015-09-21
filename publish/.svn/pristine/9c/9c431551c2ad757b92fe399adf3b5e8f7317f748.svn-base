@@ -1,0 +1,39 @@
+<#include "/crm/menu.ftl" />
+
+<table class="tables">
+	<tr class="th">
+		<td>红包总额</td>
+		<td>使用红包</td>
+		<td>进出类型</td>
+		<td>有效开始时间</td>
+		<td>有效截止时间</td>
+		<td>使用时间</td>
+		<td>返现时间</td>
+		<td>来源渠道</td>
+	</tr>
+	<#if bonus??>
+		<tr class="th">
+			<td>${bonus.totalbonus!}</td>
+			<td>${bonus.usebonus!} </td>
+			<td>${bonus.inputtype!}</td>
+			<td><#if bonus.starttime??>${bonus.starttime?string('yyyy-MM-dd')}</#if></td>
+			<td><#if bonus.endtime??>${bonus.endtime?string('yyyy-MM-dd')}</#if></td>
+			<td><#if bonus.usetime??>${bonus.usetime?string('yyyy-MM-dd')}</#if></td>
+			<td><#if bonus.backtime??>${bonus.backtime?string('yyyy-MM-dd')}</#if></td>
+			<td>${bonus.channel!}</td>
+		</tr>
+	</#if>
+	
+	<#if list?exists>
+	<#list list as p>
+	<tr>
+		<td align="left">阿桑地方</td>
+		<td align="left">123</td>
+		<td width="80">阿桑地方</td>
+		<td width="80">
+			<a href="/adminapi/add.html">编辑</a>
+		</td>
+	</tr>
+	</#list>
+	</#if>
+</table>
